@@ -1,0 +1,102 @@
+#include <windows.h>
+#include "resource.h"
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK Dlg1_Proc(HWND hDlg, UINT iMessasge, WPARAM wParam, LPARAM lParam);
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("본인의 이름_학번");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+	, LPSTR lpszCmdParam, int nCmdShow)
+{
+	HWND hWnd;
+	MSG Message;
+	WNDCLASS WndClass;
+	g_hInst = hInstance;
+
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hInstance = hInstance;
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.lpszClassName = lpszClass;
+	WndClass.lpszMenuName = NULL;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	RegisterClass(&WndClass);
+
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, (HMENU)NULL, hInstance, NULL);
+	ShowWindow(hWnd, nCmdShow);
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+	return (int)Message.wParam;
+}
+
+
+#include<math.h>
+#define BSIZE 40
+double LengthPts(int x1, int y1, int x2, int y2)//두 점의 거리를 구하는 함수
+{
+	return(sqrt((float)((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1))));            //두 점 사이의 거리를 구함
+}
+
+BOOL InCircle(int x, int y, int mx, int my)
+{
+	if (LengthPts(x, y, mx, my) < BSIZE) return TRUE;           //두 점 사이의 거리가 반지름 이하일 경우 트루 리턴
+	else return FALSE;
+}
+
+BOOL CALLBACK Dlg1_Proc(HWND hDlg, UINT iMessasge, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc;
+	switch (iMessasge)
+	{
+	case WM_INITDIALOG:
+		return 1;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_BUTTON1:
+		case IDOK:
+			hdc = GetDC(hDlg);//현재열려있는다이얼로그가져와서 getdc에 넣어줌
+			TextOut(hdc, 0, 0, TEXT("Hello World"), 11);
+			ReleaseDC(hDlg, hdc);
+			break;
+		case IDCANCEL:
+			EndDialog(hDlg, 0);
+			break;
+
+		}
+
+		break;
+	}
+	return 0;
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (iMessage)
+	{
+	case WM_CREATE:
+		break;
+	case WM_LBUTTONDOWN:
+		DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, Dlg1_Proc);//makeinteresource:왼쪽버튼을 눌르면 idd_dialog1을 연결시켜준다.
+		break;
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+

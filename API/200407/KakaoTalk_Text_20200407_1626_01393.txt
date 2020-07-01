@@ -1,0 +1,36 @@
+#define BSIZE2 80
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   int i, j;
+   static int rect[8][4];
+   static int x, y;
+   switch (iMsg) {
+   case WM_CREATE:
+      x = -50;  y = -50;
+      return 0;
+   case WM_PAINT:
+      hdc = BeginPaint(hwnd, &ps);
+      for (i = 0; i < 8; i++)
+         for (j = 0; j < 4; j++)
+         {
+            Rectangle(hdc, i*BSIZE2, j*BSIZE2, (i + 1)*BSIZE2, (j + 1)*BSIZE2);
+            if (rect[i][j])
+               Ellipse(hdc, i*BSIZE2, j*BSIZE2, (i + 1)*BSIZE2, (j + 1)*BSIZE2);
+         }
+      EndPaint(hwnd, &ps);
+      break;
+   case WM_LBUTTONDOWN:
+      x = LOWORD(lParam) / BSIZE2;
+      y = HIWORD(lParam) / BSIZE2;
+      if (x < 8 && y < 4)
+         rect[x][y] = 1;
+      InvalidateRect(hwnd, NULL, TRUE);
+      break;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}

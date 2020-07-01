@@ -2,11 +2,12 @@
 #include "HumanFactory.h"
 #include "OrcFactory.h"
 #include "ElfFactory.h"
+#include "ItemStore.h"
 CManager::CManager()
 {
 	memset(mUserLst, 0, sizeof(mUserLst));
 	mUserCount = 0;
-
+	ItemStore::Create();
 }
 
 CManager::~CManager()
@@ -19,11 +20,11 @@ CManager::~CManager()
 			mUserLst[i] = nullptr;
 		}
 	}
+	ItemStore::Destroy();
 }
 
 void CManager::Run()
 {
-	
 	while (1)
 	{
 		bool endflag = false;		
@@ -43,6 +44,10 @@ void CManager::Run()
 				{
 					select = LoginMenu();
 					system("cls");
+					char tempname[20] = {};
+					int BuyOrSellIdx = 0;
+					Item* SelledItem = nullptr;
+					Character* temp = nullptr;
 					CharacterFactory* FactorySelect = nullptr;
 					switch (select)
 					{
@@ -66,8 +71,7 @@ void CManager::Run()
 						system("cls");
 						break;
 					case DESTROY:
-						mNowUser->DisplayCharacterInfo();
-						char tempname[20];
+						mNowUser->DisplayCharacterInfo(false);
 						cout << "삭제할 캐릭터 이름 : ";
 						cin >> tempname;
 						mNowUser->RemoveCharacter(tempname);
@@ -75,9 +79,59 @@ void CManager::Run()
 						system("cls");
 						break;
 					case DISPLAY:
-						mNowUser->DisplayCharacterInfo();
+						mNowUser->DisplayCharacterInfo(true);
 						_getch();
 						system("cls");
+						break;
+					case ITEMBUY:
+						mNowUser->DisplayCharacterInfo(false);
+						
+						cout << "아이템을 구매할 캐릭터 이름 : ";
+						cin >> tempname;
+
+						for (int i = 0; i < mNowUser->GetCount(); i++)
+						{
+							if (!strcmp(mNowUser->GetChar(i)->GetName(), tempname))
+							{
+								BuyOrSellIdx = i;
+								break;
+							}
+						}
+						temp = mNowUser->GetChar(BuyOrSellIdx);
+						ItemStore::GetInstance()->Sell(&temp);
+						break;
+					case ITEMSELL:
+						mNowUser->DisplayCharacterInfo(false);
+						cout << "아이템을 판매할 캐릭터 이름 : ";
+						cin >> tempname;
+
+						for (int i = 0; i < mNowUser->GetCount(); i++)
+						{
+							if (!strcmp(mNowUser->GetChar(i)->GetName(), tempname))
+							{
+								BuyOrSellIdx = i;
+								break;
+							}
+						}
+						SelledItem = mNowUser->GetChar(BuyOrSellIdx)->SellItem();
+						ItemStore::GetInstance()->Buy(&SelledItem);
+						break;
+					case ITEMCHANGE:
+						mNowUser->DisplayCharacterInfo(false);
+						cout << "아이템 교체할 캐릭터 이름 : " << endl;
+						cin >> tempname;
+						for (int i = 0; i < mNowUser->GetCount(); i++)
+						{
+							if (!strcmp(mNowUser->GetChar(i)->GetName(), tempname))
+							{
+								BuyOrSellIdx = i;
+								break;
+							}
+						}
+						mNowUser->GetChar(BuyOrSellIdx)->ChangeItem();
+						break;
+					case STOREINFO:
+						ItemStore::GetInstance()->DisplayShop();
 						break;
 					case LOGOUT:
 						mNowUser->SetLogout();
@@ -230,14 +284,18 @@ LOGIN_MENU CManager::LoginMenu()
 		cout << "1.캐릭터생성" << endl;
 		cout << "2.캐릭터삭제" << endl;
 		cout << "3.캐릭터출력" << endl;
-		cout << "4.로그아웃" << endl;
-		cout << "5.회원탈퇴" << endl;	
+		cout << "4.아이템구매" << endl;
+		cout << "5.아이템판매" << endl;
+		cout << "6.캐릭터장비교체" << endl;
+		cout << "7.상점정보출력" << endl;
+		cout << "8.로그아웃" << endl;
+		cout << "0.회원탈퇴" << endl;	
 		cout << "선택:";
 
 		
 		cin >> select;
 
-		if (select<1 || select>4)
+		if (select<0 || select>8)
 		{
 			cout << "잘못입력했습니다" << endl;
 			continue;

@@ -1,0 +1,26 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   int i;
+   TCHAR str[] = TEXT("                   Beautiful Korea");
+   HFONT MyFont, OldFont;
+   switch (iMessage) {
+   case WM_PAINT:
+      hdc = BeginPaint(hWnd, &ps);
+      SetBkMode(hdc, TRANSPARENT);
+      for (i = 0; i<900; i += 100) {
+         MyFont = CreateFont(50, 0, i, 0, 0, 0, 0, 0, ANSI_CHARSET, 0, 0, 0, 0, TEXT("Times New Roman"));
+         OldFont = (HFONT)SelectObject(hdc, MyFont);
+         TextOut(hdc, 0, 450, str, lstrlen(str));
+         SelectObject(hdc, OldFont);
+         DeleteObject(MyFont);
+      }
+      EndPaint(hWnd, &ps);
+      return 0;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

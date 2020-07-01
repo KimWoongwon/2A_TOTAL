@@ -1,0 +1,36 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   HPEN hPen, oldPen;
+   HBRUSH hBrush, oldBrush;
+
+   switch (iMessage) {
+
+   case WM_PAINT:
+      hdc = BeginPaint(hWnd, &ps);
+
+      hPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+      oldPen = (HPEN)SelectObject(hdc, hPen); // 새로운 펜 사용 선언
+
+      hBrush = CreateSolidBrush(RGB(255, 0, 0));
+      oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+
+      Ellipse(hdc, 100, 100, 200, 200);
+
+      SelectObject(hdc, oldPen);  // 이전의 펜으로 돌아감
+      DeleteObject(hPen);
+
+      SelectObject(hdc, oldBrush);
+      DeleteObject(hBrush);
+
+      EndPaint(hWnd, &ps);
+      return 0;
+
+   case WM_DESTROY:
+      KillTimer(hWnd, 1);
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

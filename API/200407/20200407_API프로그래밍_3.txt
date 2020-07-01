@@ -1,0 +1,29 @@
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc;
+	PAINTSTRUCT ps;
+	HPEN hPen, oldPen;
+
+	switch (iMsg) {
+
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+
+		hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+		oldPen = (HPEN)SelectObject(hdc, hPen); // 새로운 펜 사용 선언
+
+		Ellipse(hdc, 20, 20, 300, 300); // 새로운 펜으로 원을 그림
+
+		SelectObject(hdc, oldPen);  // 이전의 펜으로 돌아감
+		DeleteObject(hPen);
+
+		EndPaint(hwnd, &ps);
+		return 0;
+
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}

@@ -1,0 +1,43 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   static int x, y;
+   static RECT rectView;
+   switch (iMessage) {
+   case WM_CREATE:
+      x = 20; y = 20;
+      return 0;
+   case WM_PAINT:
+      hdc = BeginPaint(hwnd, &ps);
+      Ellipse(hdc, x - 20, y - 20, x + 20, y + 20);
+      EndPaint(hWnd, &ps);
+      break;
+   case WM_KEYDOWN:
+      GetClientRect(hWnd, &rectView);
+      switch (wParam) {
+      case VK_LEFT:
+         x -= 40;
+         if (x - 20 < rectView.left) x += 40;
+         break;
+      case VK_RIGHT:
+         x += 40;
+         if (x + 20 > rectView.right) x -= 40;
+         break;
+      case VK_UP:
+         y -= 40;
+         if (y - 20 < rectView.top) y += 40;
+         break;
+      case VK_DOWN:
+         y += 40;
+         if (y + 20 > rectView.bottom) y -= 40;
+         break;
+      }
+      InvalidateRect(hWnd, NULL, TRUE);
+      break;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

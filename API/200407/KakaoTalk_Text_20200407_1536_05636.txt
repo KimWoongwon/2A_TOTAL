@@ -1,0 +1,50 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   static int x, y;
+   static BOOL Selection;
+   int mx, my;
+   switch (iMessage)
+   {
+   case WM_CREATE:
+      x = 50; y = 50;
+      Selection = FALSE;
+      break;
+
+   case WM_PAINT:
+      hdc = BeginPaint(hWnd, &ps);
+      if (Selection)
+         Rectangle(hdc, x - BSIZE, y - BSIZE, x + BSIZE, y + BSIZE);
+      Ellipse(hdc, x - BSIZE, y - BSIZE, x + BSIZE, y + BSIZE);
+      EndPaint(hWnd, &ps);
+      break;
+
+   case WM_LBUTTONDOWN:
+      mx = LOWORD(lParam);
+      my = HIWORD(lParam);
+      if (InCircle(x, y, mx, my)) Selection = TRUE;
+      InvalidateRect(hWnd, NULL, TRUE);
+      break;
+   case WM_LBUTTONUP:
+      Selection = FALSE;
+      InvalidateRect(hWnd, NULL, TRUE);
+      break;
+
+   case WM_MOUSEMOVE:
+      mx = LOWORD(lParam);
+      my = HIWORD(lParam);
+      if (Selection)
+      {
+         x = mx;
+         y = my;
+         InvalidateRect(hWnd, NULL, TRUE);
+      }
+      break;
+
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      break;
+   }
+   return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

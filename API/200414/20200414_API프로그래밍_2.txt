@@ -1,0 +1,42 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMessage) {
+	case WM_CREATE:
+		HDC hdc;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case ID_m1: //FILE 하위 메뉴
+			MessageBox(hWnd, TEXT("첫 번째 메뉴를 선택했습니다."), TEXT("첫 번째 메뉴"), MB_OK);
+			break;
+		case ID_m2:
+			if ((MessageBox(hWnd, TEXT("두 번째 메뉴를 선택했습니다."), TEXT("두 번째 메뉴"), MB_OKCANCEL) == IDCANCEL))
+				DestroyWindow(hWnd);
+			break;
+		case ID_m3:
+			DestroyWindow(hWnd);
+			break;
+		case ID_x:
+
+			break;
+		case ID_y:
+			break;
+
+		case ID_a: //edit 하위 메뉴
+			hdc = GetDC(hWnd);
+			Ellipse(hdc, 200, 200, 300, 300);
+			break;
+		case ID_b:
+			hdc = GetDC(hWnd);
+			Rectangle(hdc, 200, 200, 300, 300);
+			break;
+		}
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+RESOURCE 만드는법
+리소스 파일 추가 - 리소스 메뉴 추가 - 메뉴 편집 - 메뉴 ID설정 - #include "resource.h" 
+MAKEINTRESOURCE(메뉴ID) 추가 

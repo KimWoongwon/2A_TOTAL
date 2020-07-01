@@ -1,0 +1,16 @@
+[강민혜][오후 02:14]LRESULT CALLBACK WndProc(HWND hWnd,UINT iMessage,WPARAM wParam,LPARAM lParam)
+{
+   HDC hdc;
+
+   switch (iMessage) {
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   case WM_LBUTTONDOWN:
+      hdc=GetDC(hWnd);
+      TextOut(hdc,100,100,TEXT("Beautiful Korea"),15);
+      ReleaseDC(hWnd, hdc);
+      return 0;
+   }
+   return(DefWindowProc(hWnd,iMessage,wParam,lParam));
+}

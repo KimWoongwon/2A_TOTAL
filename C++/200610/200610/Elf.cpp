@@ -11,17 +11,17 @@ Elf::~Elf()
 
 void Elf::SetHp()
 {
-	status->Hp = 500;
+	status->Hp += 500;
 }
 void Elf::SetMp()
 {
-	status->Mp = 600;
+	status->Mp += 600;
 }
 void Elf::SetATK()
 {
-	status->ATK = 150;
+	status->ATK += 150;
 }
 void Elf::SetDEF()
 {
-	status->DEF = 50;
+	status->DEF += 50;
 }

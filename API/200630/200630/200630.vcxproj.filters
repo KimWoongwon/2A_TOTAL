@@ -47,7 +47,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\61532164-계림의-풍경.bmp">
+    <Image Include="..\..\29b8655601eaac41d2622a49266bcf25.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

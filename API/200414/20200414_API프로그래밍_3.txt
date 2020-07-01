@@ -1,0 +1,35 @@
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   HFONT hFont, OldFont;
+   TCHAR str[] = TEXT("폰트 Test 1234");
+   HBRUSH MyBrush, OldBrush;
+   switch (iMessage) {
+   case WM_PAINT:
+      hdc = BeginPaint(hWnd, &ps);
+      MyBrush = CreateHatchBrush(HS_CROSS, RGB(0, 0, 255)); //Hatch 스타일의 CROSS로 브러쉬 셋팅
+      OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
+      Rectangle(hdc, 50, 50, 400, 200);
+      SelectObject(hdc, OldBrush);
+
+      hFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,0, TEXT("궁서"));
+      OldFont = (HFONT)SelectObject(hdc, hFont);
+      SetTextColor(hdc, RGB(255, 0, 0));
+      SetBkColor(hdc, RGB(255, 255, 0));
+      TextOut(hdc, 100, 100, str, lstrlen(str));
+      SetBkMode(hdc, TRANSPARENT);
+      TextOut(hdc, 100, 150, str, lstrlen(str));
+
+      SelectObject(hdc, OldBrush);
+      SelectObject(hdc, OldFont);
+      DeleteObject(MyBrush);
+      DeleteObject(hFont);
+      EndPaint(hWnd, &ps);
+      return 0;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

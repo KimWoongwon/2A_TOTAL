@@ -1,0 +1,40 @@
+LRESULT CALLBACK WndProc(HWND hWnd,UINT iMessage,WPARAM wParam,LPARAM lParam)
+{
+   HDC hdc;
+   static int x;
+   static int y;
+   static BOOL bNowDraw=FALSE;
+
+   switch (iMessage) {
+   case WM_LBUTTONDOWN:
+      x=LOWORD(lParam);
+      y=HIWORD(lParam);
+      bNowDraw=TRUE;
+   //   return 0;
+   //case WM_MOUSEMOVE:
+   //   if (bNowDraw==TRUE) {
+   //      hdc=GetDC(hWnd);
+   //      MoveToEx(hdc,x,y,NULL);
+   //      x=LOWORD(lParam);
+   //      y=HIWORD(lParam);
+   //      LineTo(hdc,x,y);
+   //      ReleaseDC(hWnd,hdc);
+   //   }
+      return 0;
+   case WM_LBUTTONUP:
+      hdc = GetDC(hWnd);
+            MoveToEx(hdc,x,y,NULL);
+            x=LOWORD(lParam);
+            y=HIWORD(lParam);
+            LineTo(hdc,x,y);
+      bNowDraw=FALSE;
+      return 0;
+   case WM_LBUTTONDBLCLK:
+      InvalidateRect(hWnd, NULL, TRUE);
+      return 0;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd,iMessage,wParam,lParam));
+}

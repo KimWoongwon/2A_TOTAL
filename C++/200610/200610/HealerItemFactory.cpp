@@ -1,19 +1,19 @@
 #include "HealerItemFactory.h"
-const char* HealerItemFactory::CreateWeapon()
+Weapon* HealerItemFactory::CreateWeapon()
 {
 	if (kind == HUM)
-		return "성서";
+		return new Weapon("성서", new STATUS(0, 100, 10, 40), 1000, CODE_HEALER);
 	else if (kind == ORC)
-		return "주술서";
+		return new Weapon("주술서", new STATUS(0, 100, 20, 30), 1000, CODE_HEALER);
 	else if (kind == ELF)
-		return "치유의 오브";
+		return new Weapon("치유의 오브", new STATUS(0, 120, 10, 20), 1000, CODE_HEALER);
 }
-const char* HealerItemFactory::CreateArmor()
+Armor* HealerItemFactory::CreateArmor()
 {
 	if (kind == HUM)
-		return "흰색 사제복";
+		return new Armor("흰색 사제복", new STATUS(50, 100, -10, 20), 500, CODE_HEALER);
 	else if (kind == ORC)
-		return "주술사 의복";
+		return new Armor("주술사 의복", new STATUS(50, 80, 0, 30), 500, CODE_HEALER);
 	else if (kind == ELF)
-		return "치유사의 로브";
+		return new Armor("치유사 로브", new STATUS(30, 100, 0, 30), 500, CODE_HEALER);
 }

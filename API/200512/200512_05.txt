@@ -1,0 +1,91 @@
+#include <windows.h>
+#include "resource.h"
+
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("InfoDlg");
+TCHAR str[128];
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+	, LPSTR lpszCmdParam, int nCmdShow)
+{
+	HWND hWnd;
+	MSG Message;
+	WNDCLASS WndClass;
+	g_hInst = hInstance;
+
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hInstance = hInstance;
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.lpszClassName = lpszClass;
+	WndClass.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	RegisterClass(&WndClass);
+
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, (HMENU)NULL, hInstance, NULL);
+	ShowWindow(hWnd, nCmdShow);
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+	return (int)Message.wParam;
+}
+
+
+
+BOOL CALLBACK InfoDlgProc(HWND hDlg, UINT iMessasge, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMessasge)
+	{
+	case WM_INITDIALOG:
+
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDOK2:
+			EndDialog(hDlg, NULL);
+			return 0;
+		case IDOK:
+			GetDlgItemText(hDlg, IDC_STR, str, 128);
+			SetDlgItemText(hDlg, IDC_STR2, str);
+			return 0;
+		case IDCANCEL:
+			SetDlgItemText(hDlg, IDC_STR, TEXT(""));
+			SetDlgItemText(hDlg, IDC_STR2, TEXT(""));
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMessage)
+	{
+	case WM_CREATE:
+		hWndMain = hWnd;
+		lstrcpy(str, TEXT(""));
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case ID_FILE_DIALOG:
+			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, InfoDlgProc);
+		}
+		break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

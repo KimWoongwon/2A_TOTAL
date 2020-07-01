@@ -1,0 +1,60 @@
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+   HDC hdc;
+   PAINTSTRUCT ps;
+   static int x, y, xStep, yStep, flag;
+   static RECT rectView;
+
+   switch (iMsg) {
+   case WM_CREATE:
+      x = 20; y = 20;
+      xStep = 40; yStep = 0;
+      flag = 0;
+      return 0;
+
+   case WM_PAINT:
+      hdc = BeginPaint(hwnd, &ps);
+      Ellipse(hdc, x - 20, y - 20, x + 20, y + 20);
+      EndPaint(hwnd, &ps);
+      break;
+   case WM_KEYDOWN:
+      switch (wParam) {
+      case VK_RETURN:
+         flag = 1 - flag;
+         if (flag) SetTimer(hwnd, 1, 100, NULL);
+         else KillTimer(hwnd, 1);
+         break;
+      case VK_LEFT:
+         xStep = -40;
+         yStep = 0;
+         break;
+      case VK_RIGHT:
+         xStep = 40;
+         yStep = 0;
+         break;
+      case VK_UP:
+         xStep = 0;
+         yStep = -40;
+         break;
+      case VK_DOWN:
+         xStep = 0;
+         yStep = 40;
+         break;
+      }
+      break;
+
+   case WM_TIMER:
+      GetClientRect(hwnd, &rectView);
+      x += xStep; y += yStep;
+      if (x - 20 < rectView.left || x + 20 > rectView.right) x -= xStep;
+      if (y - 20 < rectView.top || y + 20 > rectView.bottom) y -= yStep;
+      InvalidateRect(hwnd, NULL, TRUE);
+      break;
+
+   case WM_DESTROY:
+      KillTimer(hwnd, 1);
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}

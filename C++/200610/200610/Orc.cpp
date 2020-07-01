@@ -11,17 +11,17 @@ Orc::~Orc()
 
 void Orc::SetHp()
 {
-	status->Hp = 1000;
+	status->Hp += 1000;
 }
 void Orc::SetMp()
 {
-	status->Mp = 100;
+	status->Mp += 100;
 }
 void Orc::SetATK()
 {
-	status->ATK = 50;
+	status->ATK += 50;
 }
 void Orc::SetDEF()
 {
-	status->DEF = 150;
+	status->DEF += 150;
 }

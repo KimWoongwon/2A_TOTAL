@@ -1,0 +1,84 @@
+#define BSIZE2 80
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+    HDC hdc;
+    PAINTSTRUCT ps;
+    SYSTEMTIME st;
+    int i, j;
+    static int count;
+    static int rect[8][4];
+    static int x, y;
+    static TCHAR sTime[128];
+    static TCHAR sCount[128];
+    static RECT rt = { 800,200,400,220 };
+
+
+    switch (iMsg) {
+    case WM_CREATE:
+        count = 0;
+        x = -50;  y = -50;
+        wsprintf(sCount, TEXT("빨간색 원의 갯수 : %d"), count);
+        wsprintf(sTime, TEXT("현재 시간 : %d:%d:%d"), 0, 0, 0);
+        SetTimer(hwnd, 1, 1000, NULL);
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 4; j++)
+                rect[i][j] = 0;
+        return 0;
+    case WM_PAINT:
+        hdc = BeginPaint(hwnd, &ps);
+        TextOut(hdc, 700, 100, sTime, lstrlen(sTime));
+        TextOut(hdc, 700, 140, sCount, lstrlen(sCount));
+        for (i = 0; i < 8; i++)
+            for (j = 0; j < 4; j++)
+            {
+                Rectangle(hdc, i * BSIZE2, j * BSIZE2, (i + 1) * BSIZE2, (j + 1) * BSIZE2);
+                if (rect[i][j] == 1)
+                {
+                    HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
+                    HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+                    Ellipse(hdc, i * BSIZE2, j * BSIZE2, (i + 1) * BSIZE2, (j + 1) * BSIZE2);
+                    SelectObject(hdc, oldBrush);
+                    DeleteObject(hBrush);
+                }
+                else if (rect[i][j] == 2)
+                {
+                    HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
+                    HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+                    Ellipse(hdc, i * BSIZE2, j * BSIZE2, (i + 1) * BSIZE2, (j + 1) * BSIZE2);
+                    SelectObject(hdc, oldBrush);
+                    DeleteObject(hBrush);
+                }
+            }
+        EndPaint(hwnd, &ps);
+        break;
+    case WM_LBUTTONDOWN:
+        x = LOWORD(lParam) / BSIZE2;
+        y = HIWORD(lParam) / BSIZE2;
+        if (x < 8 && y < 4 && rect[x][y] == 0)
+            rect[x][y] = 1;
+        InvalidateRect(hwnd, NULL, TRUE);
+        break;
+   
+    case WM_RBUTTONDOWN:
+        x = LOWORD(lParam) / BSIZE2;
+        y = HIWORD(lParam) / BSIZE2;
+        if (x < 8 && y < 4 && rect[x][y] == 0)
+        {
+            rect[x][y] = 2;
+            wsprintf(sCount, TEXT("빨간색 원의 갯수 : %d"), ++count);
+        }
+        InvalidateRect(hwnd, NULL, TRUE);
+        break;
+    case WM_TIMER:
+        GetLocalTime(&st);
+        wsprintf(sTime, TEXT("현재 시간 : %d:%d:%d"),
+            st.wHour, st.wMinute, st.wSecond);
+        InvalidateRect(hwnd, NULL, TRUE);
+        break;
+    case WM_DESTROY:
+        KillTimer(hwnd, 1);
+        PostQuitMessage(0);
+        return 0;
+    }
+    return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}

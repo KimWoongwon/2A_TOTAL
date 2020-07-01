@@ -1,0 +1,13 @@
+[강민혜][오후 02:42]LRESULT CALLBACK WndProc(HWND hWnd,UINT iMessage,WPARAM wParam,LPARAM lParam)
+{
+   switch (iMessage) {
+   case WM_LBUTTONDOWN:
+      MessageBox(hWnd, TEXT("마우스 왼쪽 버튼을 눌렀습니다"),
+         TEXT("메시지 박스"),MB_OK);
+      return 0;
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
+   }
+   return(DefWindowProc(hWnd,iMessage,wParam,lParam));
+}

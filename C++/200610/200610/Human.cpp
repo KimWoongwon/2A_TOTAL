@@ -11,17 +11,17 @@ Human::~Human()
 
 void Human::SetHp()
 {
-	status->Hp = 700;
+	status->Hp += 700;
 }
 void Human::SetMp()
 {
-	status->Mp = 400;
+	status->Mp += 400;
 }
 void Human::SetATK()
 {
-	status->ATK = 100;
+	status->ATK += 100;
 }
 void Human::SetDEF()
 {
-	status->DEF = 100;
+	status->DEF += 100;
 }

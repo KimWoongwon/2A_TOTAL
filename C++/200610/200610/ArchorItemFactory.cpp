@@ -1,19 +1,19 @@
 #include "ArchorItemFactory.h"
-const char* ArchorItemFactory::CreateWeapon()
+Weapon* ArchorItemFactory::CreateWeapon()
 {
 	if (kind == HUM)
-		return "Àå±Ã";
+		return new Weapon("Àå±Ã", new STATUS(0, 0, 50, 0), 1000, CODE_ARCHOR);
 	else if (kind == ORC)
-		return "¿ÀÅ©Á¦ °Å±Ã";
+		return new Weapon("¿ÀÅ©Á¦ °Å±Ã", new STATUS(0, 0, 75, -25), 1000, CODE_ARCHOR);
 	else if (kind == ELF)
-		return "¿¤ÇÁÁ¦ ´Ü±Ã";
+		return new Weapon("¿¤ÇÁÁ¦ ´Ü±Ã", new STATUS(0, 0, 100, -50), 1000, CODE_ARCHOR);
 }
-const char* ArchorItemFactory::CreateArmor()
+Armor* ArchorItemFactory::CreateArmor()
 {
 	if (kind == HUM)
-		return "»ç³É²ÛÀÇ °¡Á×Á¶³¢";
+		return new Armor("»ç³É²ÛÀÇ °¡Á× Á¶³¢", new STATUS(80, 40, 0, 40), 500, CODE_ARCHOR);
 	else if (kind == ORC)
-		return "´Á´ëÀÇ °¡Á×Á¶³¢";
+		return new Armor("´Á´ë °¡Á× Á¶³¢", new STATUS(100, -20, 40, 40), 500, CODE_ARCHOR);
 	else if (kind == ELF)
-		return "Áú±ä ³ª¹«µ¢Äð Á¶³¢";
+		return new Armor("Áú±ä ³ª¹«µ¢Äð Á¶³¢", new STATUS(60, -20, 60, 20), 500, CODE_ARCHOR);
 }

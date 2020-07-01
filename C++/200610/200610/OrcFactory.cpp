@@ -3,6 +3,8 @@
 #include "ArchorItemFactory.h"
 #include "HealerItemFactory.h"
 #include "SorcererItemFactory.h"
+
+
 OrcFactory::OrcFactory()
 {
 	memset(PossiblePetList, 0, sizeof(PossiblePetList));

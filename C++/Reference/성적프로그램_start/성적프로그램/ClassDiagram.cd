@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CDesign" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAAAAAAAAAAAAAAAAiAAAAgAAIAEAEAA=</HashCode>
+      <FileName>Student\Design\Design.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGraphic" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAoAAAAACAAAAAAAAAAAAAAAAAiAAAAgAAAAAAEAA=</HashCode>
+      <FileName>Student\Graphic\Graphic.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CManager" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAEECAgBAAAAgAAQAAEAAIAAAAAIAAIAABIQI=</HashCode>
+      <FileName>Manager\Manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CProgramming" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAAAAAABAAAAAAAAAiAAAAgBAAAAAEAA=</HashCode>
+      <FileName>Student\Programming\Programming.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CStudent" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAEAAAAAAAIAAAIAAAAAAAAAAAAAAAAAgAQAIABAA=</HashCode>
+      <FileName>Student\Student.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="__unnamed_enum_0002_1" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Main\Global.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0002_2" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAACAAQAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Main\Global.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

@@ -1,5 +1,6 @@
 #pragma once
 #include "Global.h"
+#include "LinkedList.h"
 #include "ItemFactory.h"
 class Character
 {
@@ -9,25 +10,43 @@ protected:
 	int Level;
 	STATUS* status;
 
-	ItemFactory* blacksmith;
 	CHAR_MENU kind;
 	JOB job;
-	char Weapon[50];
-	char Armor[50];
+	Weapon* NowWeapon;
+	Armor* NowArmor;
+	bool WeaponStatus;
+	bool ArmorStatus;
+	
+	Item* Inventory[20];
+	int itemCount;
 public:
 	Character(const char*, const char*,JOB, ItemFactory*);
 	virtual ~Character();
 
 	void SetName(const char*);
+	void SetWStatus(bool);
+	void SetAStatus(bool);
+	void SetStatus(STATUS*);
+	void SetWeapon(Item*);
+	void SetArmor(Item*);
+
 	const char* GetName();
 	int GetLevel();
 	STATUS* GetStatus();
 	const char* GetPetkind();
 	const char* GetKind();
 	const char* GetJOB();
-	const char* GetWeapon();
-	const char* GetArmor();
+	Weapon* GetWeapon();
+	Armor* GetArmor();
+	bool GetWStatus();
+	bool GetAStatus();
 
+	void ShowInventroy();
+	void BuyItem(Item*);
+	Item* SellItem();
+	void ChangeItem();
+	void DeletefromInventory(int);
+	
 	virtual void SetHp() = 0;
 	virtual void SetMp() = 0;
 	virtual void SetATK() = 0;

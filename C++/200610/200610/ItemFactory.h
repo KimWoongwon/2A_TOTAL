@@ -1,4 +1,6 @@
 #pragma once
+#include "Weapon.h"
+#include "Armor.h"
 class ItemFactory
 {
 protected:
@@ -7,7 +9,7 @@ public:
 	ItemFactory(CHAR_MENU p_kind) { kind = p_kind; }
 	~ItemFactory() {}
 
-	virtual const char* CreateWeapon() = 0;
-	virtual const char* CreateArmor() = 0;
+	virtual Weapon* CreateWeapon() = 0;
+	virtual Armor* CreateArmor() = 0;
 };
 

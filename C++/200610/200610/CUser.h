@@ -19,6 +19,7 @@ public:
 	const char* GetId();
 	const char* GetPw();
 	bool  GetLoginState();
+	Character* GetChar(int );
 	int GetCount();
 
 	bool SetId(const char*);
@@ -28,7 +29,7 @@ public:
 	
 	void InsertCharacter(Character*);
 	void RemoveCharacter(const char*);
-	void DisplayCharacterInfo();
+	void DisplayCharacterInfo(bool);
 };
 
 #endif

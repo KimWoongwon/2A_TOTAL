@@ -1,0 +1,177 @@
+#include <windows.h>
+#include <time.h>
+#include "resource.h"
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("MyButton");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+    , LPSTR lpszCmdParam, int nCmdShow)
+{
+    HWND hWnd;
+    MSG Message;
+    WNDCLASS WndClass;
+    g_hInst = hInstance;
+
+    WndClass.cbClsExtra = 0;
+    WndClass.cbWndExtra = 0;
+    WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+    WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    WndClass.hInstance = hInstance;
+    WndClass.lpfnWndProc = WndProc;
+    WndClass.lpszClassName = lpszClass;
+    WndClass.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
+    WndClass.style = CS_HREDRAW | CS_VREDRAW;
+    RegisterClass(&WndClass);
+
+    hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        NULL, (HMENU)NULL, hInstance, NULL);
+    ShowWindow(hWnd, nCmdShow);
+
+    while (GetMessage(&Message, NULL, 0, 0)) {
+        TranslateMessage(&Message);
+        DispatchMessage(&Message);
+    }
+    return (int)Message.wParam;
+}
+
+#define WHITE 0
+#define RED 1
+#define BLUE 2
+#define SIZE 30
+
+struct CIRCLE
+{
+public:
+    POINT pos;
+    int color;
+    bool fire;
+    CIRCLE();
+    void SetPos(RECT& tR);
+};
+CIRCLE::CIRCLE()
+{
+    color = WHITE;
+    fire = FALSE;
+}
+void CIRCLE::SetPos(RECT& tR)
+{
+    this->pos.x = tR.right / 2;
+    this->pos.y = tR.bottom - 200;
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+    HDC hdc;
+    PAINTSTRUCT ps;
+    HBRUSH NewBrush;
+    HBRUSH OldBrush;
+    static RECT wRect;
+    static CIRCLE circle[100];
+    static int count = 0;
+    static int flag = WHITE;
+    
+    switch (iMessage) {
+    case WM_CREATE:
+        GetClientRect(hWnd, &wRect);
+        CreateWindow(TEXT("button"), TEXT("White Circle"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, wRect.right - 300, wRect.top + 200, 100, 25, hWnd, (HMENU)WHITE, g_hInst, NULL);
+        CreateWindow(TEXT("button"), TEXT("Red Circle"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, wRect.right - 300, wRect.top + 230, 100, 25, hWnd, (HMENU)RED, g_hInst, NULL);
+        CreateWindow(TEXT("button"), TEXT("Blue Circle"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, wRect.right - 300, wRect.top + 260, 100, 25, hWnd, (HMENU)BLUE, g_hInst, NULL);
+        
+        SetTimer(hWnd, 1, 10, NULL);
+        for (int i = 0; i < 100; i++)
+            circle[i].SetPos(wRect);
+        return 0;
+    case WM_KEYDOWN:
+        switch (LOWORD(wParam))
+        {
+        case VK_SPACE:
+            
+            circle[count].color = flag;
+            circle[count].fire = TRUE;
+            if (count < 99)
+                count++;
+            else if (count >= 100)
+                count = 0;
+            break;
+        default:
+            break;
+        }
+        return 0;
+    case WM_PAINT:
+        hdc = BeginPaint(hWnd, &ps);
+        Rectangle(hdc, wRect.right / 2 - 150, wRect.bottom - 200, wRect.right / 2 + 150, wRect.bottom - 150);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (circle[i].fire)
+            {
+                switch (circle[i].color)
+                {
+                case WHITE:
+                    NewBrush = CreateSolidBrush(RGB(255, 255, 255));
+                    OldBrush = (HBRUSH)SelectObject(hdc, NewBrush);
+                    break;
+                case RED:
+                    NewBrush = CreateSolidBrush(RGB(255, 0, 0));
+                    OldBrush = (HBRUSH)SelectObject(hdc, NewBrush);
+                    break;
+                case BLUE:
+                    NewBrush = CreateSolidBrush(RGB(0, 0, 255));
+                    OldBrush = (HBRUSH)SelectObject(hdc, NewBrush);
+                    break;
+                }
+
+                Ellipse(hdc, circle[i].pos.x - SIZE, circle[i].pos.y - SIZE, circle[i].pos.x + SIZE, circle[i].pos.y + SIZE);
+            }
+            
+        }
+
+        EndPaint(hWnd, &ps);
+        return 0;
+    case WM_TIMER:
+        for (int i = 0; i < count; i++)
+        {
+            circle[i].pos.y -= 10;
+        }
+        
+        InvalidateRgn(hWnd, NULL, TRUE);
+        return 0;
+   
+    case WM_COMMAND:
+        switch (LOWORD(wParam))
+        {
+        case ID_WCIRCLE:
+        case WHITE:
+            flag = WHITE;
+            break;
+
+        case ID_RCIRCLE:
+        case RED:
+            flag = RED;
+            break;
+
+        case ID_BCIRCLE:
+        case BLUE:
+            flag = BLUE;
+            break;
+        case ID_EXIT:
+            KillTimer(hWnd, 1);
+            PostQuitMessage(0);
+            break;
+
+        }
+        SetFocus(hWnd);
+        InvalidateRgn(hWnd, NULL, TRUE);
+        return 0;
+    case WM_DESTROY:
+        KillTimer(hWnd, 1);
+        PostQuitMessage(0);
+        return 0;
+    }
+    return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

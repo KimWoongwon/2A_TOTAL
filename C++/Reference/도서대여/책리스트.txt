@@ -1,0 +1,5 @@
+mBookLst[mBookCount++] = new CBook("C++완전정복", 5);
+mBookLst[mBookCount++] = new CBook("TCP/IP소켓 프로그래밍", 10);
+mBookLst[mBookCount++] = new CBook("게임알고리즘", 20);
+mBookLst[mBookCount++] = new CBook("게임엔진", 5);
+mBookLst[mBookCount++] = new CBook("게임프로그래밍기초", 12);
