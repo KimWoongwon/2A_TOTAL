@@ -1,0 +1,73 @@
+#include <windows.h>
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("김웅원_16032020");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+	, LPSTR lpszCmdParam, int nCmdShow)
+{
+	HWND hWnd;
+	MSG Message;
+	WNDCLASS WndClass;
+	g_hInst = hInstance;
+
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hInstance = hInstance;
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.lpszClassName = lpszClass;
+	WndClass.lpszMenuName = NULL;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	RegisterClass(&WndClass);
+
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, (HMENU)NULL, hInstance, NULL);
+	ShowWindow(hWnd, nCmdShow);
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+	return (int)Message.wParam;
+}
+
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc;
+	PAINTSTRUCT ps;
+	static int x = 100;
+	static int y = 100;
+
+	switch (iMessage) {
+	case WM_KEYDOWN:
+		// GetKeyState 함수는 메세지 큐에 값을 저장하지 않고 누르는 순간 바로바로 처리해준다.
+		if (GetKeyState(VK_LEFT) & 0x8000)	// GetKeyState 함수의 반환값
+			x -= 8;							// 1000 0000 0000 0000 눌려져있을때
+		if (GetKeyState(VK_RIGHT) & 0x8000)	// 0000 0000 0000 0000 안눌러져있을때
+			x += 8;		
+		if (GetKeyState(VK_UP) & 0x8000)	// 반환값 0x0000, 이전에 누른저깅 없고, 호출시점에도 누르지 않은 상태
+			y -= 8;							// 반환값 0x0001, 이전에 누른적이 있고, 호출시점에는 누르지 않은 상태
+		if (GetKeyState(VK_DOWN) & 0x8000)	// 반환값 0x8000, 이전에 누른적이 없고, 호출시점에는 누른상태
+			y += 8;							// 반환값 0x8001, 이전에 누른적이 있고, 호출시점에도 누른상태
+
+		InvalidateRect(hWnd,NULL,TRUE);
+		//InvalidateRect(hWnd, NULL, FALSE);
+		return 0;
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		TextOut(hdc, x, y, TEXT("A"), 1);
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

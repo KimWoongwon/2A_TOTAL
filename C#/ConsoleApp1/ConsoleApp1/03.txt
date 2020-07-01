@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp1
+{
+
+    class Program
+    {
+        delegate int MyDelegate(int p_a, int p_b);
+        class TestCls
+        {
+            public int plus(int a, int b)
+            {
+                return a + b;
+            }
+            public int Minus(int a, int b)
+            {
+                return a - b;
+            }
+        }
+        static void Main(string[] args)
+        {
+            string tempstr = "1-2"; //Console.ReadLine();
+            string[] vals =  tempstr.Split('-');
+            //for(int i = 0; i < tempstr.Length; i++)
+            //{
+            //    tempstr[i] == '+'
+            //}
+
+            int result = 0;
+
+            TestCls tcls = new TestCls();
+            MyDelegate callback = null;
+
+            if (tempstr.IndexOf('+') > 0)
+            {
+                //result = int.Parse(vals[0]) + int.Parse(vals[1]);
+                callback = tcls.plus;
+            }
+            else if(tempstr.IndexOf('-') > 0)
+            {
+                //result = int.Parse(vals[0]) + int.Parse(vals[1]);
+                callback = tcls.Minus;
+            }
+            result = callback(int.Parse(vals[0]), int.Parse(vals[1]));
+
+            Console.WriteLine(result);
+        }
+    }
+}

@@ -1,0 +1,121 @@
+#include <windows.h>
+#include <time.h>
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("김웅원_16032020");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+	, LPSTR lpszCmdParam, int nCmdShow)
+{
+	HWND hWnd;
+	MSG Message;
+	WNDCLASS WndClass;
+	g_hInst = hInstance;
+
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hInstance = hInstance;
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.lpszClassName = lpszClass;
+	WndClass.lpszMenuName = NULL;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	RegisterClass(&WndClass);
+
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, (HMENU)NULL, hInstance, NULL);
+	ShowWindow(hWnd, nCmdShow);
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+	return (int)Message.wParam;
+}
+
+#define SIZE 20
+#define MAX_CIRCLE 20
+DWORD WINAPI ThreadFunc(LPVOID Param)
+{
+    HDC hdc;
+    POINT pos = *(LPPOINT)Param;
+    HBRUSH hBrush, hOldBrush;
+    hdc = GetDC(hWndMain);
+    srand(time(NULL));
+    for (;;) {
+        hBrush = CreateSolidBrush(RGB(rand() % 256, rand() % 256, rand() % 256));
+        hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+        Ellipse(hdc, pos.x, pos.y, pos.x + SIZE, pos.y + SIZE);
+        SelectObject(hdc, hOldBrush);
+        DeleteObject(hBrush);
+        GdiFlush();
+        Sleep(100);
+    }
+    ReleaseDC(hWndMain, hdc);
+    return 0;
+}
+
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+    static HANDLE hThread[MAX_CIRCLE];
+    static DWORD ThreadID[MAX_CIRCLE];
+    static POINT pos[MAX_CIRCLE];
+
+    static int Count = 0;
+    static int index = 0;
+
+    static RECT rect;
+    static RECT PointRect;
+    
+    static HDC hdc;
+    static PAINTSTRUCT ps;
+    
+    switch (iMessage) {
+    case WM_CREATE:
+        hWndMain = hWnd;
+        srand(time(NULL));
+        GetClientRect(hWnd, &rect);
+        return 0;
+    case WM_LBUTTONDOWN:
+        index = Count % MAX_CIRCLE;
+        if (Count >= MAX_CIRCLE)
+        {
+            SetRect(&PointRect, pos[index].x, pos[index].y, pos[index].x + SIZE, pos[index].y + SIZE);
+            SuspendThread(hThread[index]);
+            InvalidateRect(hWnd, &PointRect, TRUE);
+        }
+
+        pos[index].x = rand() % rect.right;
+        pos[index].y = rand() % rect.bottom;
+        
+        hThread[index] = CreateThread(NULL, 0, ThreadFunc, &pos[index], 0, &ThreadID[index]);
+        Count++;
+        break;
+    case WM_RBUTTONDOWN:
+        for (int i = 0; i < MAX_CIRCLE; i++)
+        {
+            SuspendThread(hThread[i]);
+        }
+        index = 0;
+        InvalidateRect(hWnd, NULL, TRUE);
+        break;
+    case WM_PAINT:
+        hdc = BeginPaint(hWnd, &ps);
+        TextOut(hdc, 10, 10, "왼쪽 클릭 : 원 생성", lstrlen("왼쪽 클릭 : 원 생성"));
+        TextOut(hdc, 10, 40, "오른쪽 클릭 : 화면 지우기", lstrlen("오른쪽 클릭 : 화면 지우기"));
+        EndPaint(hWnd, &ps);
+        break;
+    case WM_DESTROY:
+        for (int i = 0; i < MAX_CIRCLE; i++) {
+            CloseHandle(hThread[i]);
+        }
+        PostQuitMessage(0);
+        return 0;
+    }
+    return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

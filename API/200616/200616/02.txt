@@ -1,0 +1,165 @@
+#include <windows.h>
+#include <time.h>
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("Bounce");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+    , LPSTR lpszCmdParam, int nCmdShow)
+{
+    HWND hWnd;
+    MSG Message;
+    WNDCLASS WndClass;
+    g_hInst = hInstance;
+
+    WndClass.cbClsExtra = 0;
+    WndClass.cbWndExtra = 0;
+    WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+    WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    WndClass.hInstance = hInstance;
+    WndClass.lpfnWndProc = WndProc;
+    WndClass.lpszClassName = lpszClass;
+    WndClass.lpszMenuName = NULL;
+    WndClass.style = CS_HREDRAW | CS_VREDRAW;
+    RegisterClass(&WndClass);
+
+    hWnd = CreateWindow(lpszClass, lpszClass, WS_BORDER | WS_CAPTION | WS_SYSMENU,
+        CW_USEDEFAULT, CW_USEDEFAULT, 640, 350,
+        NULL, (HMENU)NULL, hInstance, NULL);
+    ShowWindow(hWnd, nCmdShow);
+    hWndMain = hWnd;
+
+    while (GetMessage(&Message, NULL, 0, 0)) {
+        TranslateMessage(&Message);
+        DispatchMessage(&Message);
+    }
+    return (int)Message.wParam;
+}
+
+#define R 20
+int x[10], y[10];
+int xi[10], yi[10];
+
+HBITMAP MemBit;
+void OnTimer()
+{
+    RECT crt;
+
+    GetClientRect(hWndMain, &crt);
+    for (int i = 0; i < 10; i++)
+    {
+        if (x[i] <= R || x[i] >= crt.right - R) {
+            xi[i] *= -1;
+        }
+        if (y[i] <= R || y[i] >= crt.bottom - R) {
+            yi[i] *= -1;
+        }
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        x[i] += xi[i];
+        y[i] += yi[i];
+    }
+    
+
+    HBITMAP hOldbmp;
+    HDC hdc, MemDC;
+    hdc = GetDC(hWndMain);
+    HPEN hPen, OldPen;
+    HBRUSH hBrush, OldBrush;
+
+    if (MemBit)
+        DeleteObject(MemBit);
+
+    MemBit = CreateCompatibleBitmap(hdc, 800, 600);
+    MemDC = CreateCompatibleDC(hdc);
+    hOldbmp = (HBITMAP)SelectObject(MemDC, MemBit);
+
+    PatBlt(MemDC, 0, 0, 800, 600, WHITENESS);
+
+    for (int i = 0; i < crt.right; i += 10) {
+        MoveToEx(MemDC, i, 0, NULL);
+        LineTo(MemDC, i, crt.bottom);
+    }
+
+    for (int i = 0; i < crt.bottom; i += 10) {
+        MoveToEx(MemDC, 0, i, NULL);
+        LineTo(MemDC, crt.right, i);
+    }
+
+    hPen = CreatePen(PS_INSIDEFRAME, 5, RGB(255, 0, 0));
+    OldPen = (HPEN)SelectObject(MemDC, hPen);
+    hBrush = CreateSolidBrush(RGB(0, 0, 255));
+    OldBrush = (HBRUSH)SelectObject(MemDC, hBrush);
+    for (int i = 0; i < 10; i++)
+    {
+        Ellipse(MemDC, x[i] - R, y[i] - R, x[i] + R, y[i] + R);
+    }
+    
+    DeleteObject(SelectObject(MemDC, OldPen));
+    DeleteObject(SelectObject(MemDC, OldBrush));
+
+    SelectObject(MemDC, hOldbmp);
+    DeleteDC(MemDC);
+    ReleaseDC(hWndMain, hdc);
+    InvalidateRect(hWndMain, NULL, FALSE);
+    
+}
+void DrawBitMap(HDC hdc, int x, int y, HBITMAP hBit)
+{
+    HDC memDc;
+    HBITMAP OldBitmap;
+    int bx, by;
+    BITMAP bit;
+
+    memDc = CreateCompatibleDC(hdc);
+    OldBitmap = (HBITMAP)SelectObject(memDc, hBit);
+
+    GetObject(hBit, sizeof(BITMAP), &bit);
+    bx = bit.bmWidth;
+    by = bit.bmHeight;
+
+    BitBlt(hdc, x, y, bx, by, memDc, 0, 0, SRCCOPY);
+    SelectObject(memDc, OldBitmap);
+    DeleteDC(memDc);
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+    HDC hdc;
+    PAINTSTRUCT ps;
+    
+    
+    int i;
+
+    switch (iMessage) {
+    case WM_CREATE:
+        srand(time(NULL));
+        for (int i = 0; i < 10; i++)
+        {
+            x[i] = rand() % 50 + 50;
+            y[i] = rand() % 50 + 50;
+            xi[i] = rand() % 13 + 1;
+            yi[i] = rand() % 13 + 1;
+        }
+        
+        SetTimer(hWnd, 1, 25, NULL);
+        return 0;
+    case WM_TIMER:
+        OnTimer();
+        return 0;
+    case WM_PAINT:
+        hdc = BeginPaint(hWnd, &ps);
+        DrawBitMap(hdc, 0, 0, MemBit);
+        EndPaint(hWnd, &ps);
+        return 0;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        KillTimer(hWnd, 1);
+        return 0;
+    }
+    return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CBackBit" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAAAAwAQAABoGAQABBAAEABAQEAAAAY=</HashCode>
+      <FileName>BackBit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDragCircleDrawing" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAEAAAAEAAAAAAAABABAAEAAAIAAAAAAAAA=</HashCode>
+      <FileName>DragCircleDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDragFreeLineDrawing" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAQAAAAAEAAgAAAAAAAAAABABAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>DragFreeLineDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDragLineDrawing" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBAAAAAAAAEAAAAAAAAAAAAABABAAEIAAAAAAAAAAAA=</HashCode>
+      <FileName>DragLineDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDragRectangleDrawing" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAMAAAAAAQAAAAAABABAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>DragRectangleDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMainFrame" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAQAAAAAACAAABABAAkAAAAAAAAAAAAI=</HashCode>
+      <FileName>MainFrame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMenu" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAIABAAAIAAAAABAAAAAFAAIAAGDEAACIAESAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMouse" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBABCAACAAAAAwQAggACAAQAbABAAmEAWJAAACAAIAQ=</HashCode>
+      <FileName>Mouse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDragDrawing" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAgQAAAAAAAAABAAAAABAAAAAAAAg=</HashCode>
+      <FileName>DragDrawing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CWindowFrame" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABAAAAAAAAQAAAgAAAAAAjABAAEQAAAAAQAEAAgI=</HashCode>
+      <FileName>WindowFrame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="__unnamed_enum_000d_1" Collapsed="true">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAgAAAAAAAASAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Global.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_000d_2" Collapsed="true">
+    <Position X="11.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Global.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

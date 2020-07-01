@@ -1,0 +1,118 @@
+#include <windows.h>
+
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+HINSTANCE g_hInst;
+HWND hWndMain;
+LPCTSTR lpszClass = TEXT("±è¿õ¿ø_16032020");
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
+	, LPSTR lpszCmdParam, int nCmdShow)
+{
+	HWND hWnd;
+	MSG Message;
+	WNDCLASS WndClass;
+	g_hInst = hInstance;
+
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hInstance = hInstance;
+	WndClass.lpfnWndProc = WndProc;
+	WndClass.lpszClassName = lpszClass;
+	WndClass.lpszMenuName = NULL;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	RegisterClass(&WndClass);
+
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, (HMENU)NULL, hInstance, NULL);
+	ShowWindow(hWnd, nCmdShow);
+
+	while (GetMessage(&Message, NULL, 0, 0)) {
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+	return (int)Message.wParam;
+}
+
+void DrawBitMap(HDC hdc, int x, int y, HBITMAP hBit)
+{
+	HDC memDc;
+	HBITMAP OldBitmap;
+	int bx, by;
+	BITMAP bit;
+
+	memDc = CreateCompatibleDC(hdc);
+	OldBitmap = (HBITMAP)SelectObject(memDc, hBit);
+
+	GetObject(hBit, sizeof(BITMAP), &bit);
+	bx = bit.bmWidth;
+	by = bit.bmHeight;
+
+	BitBlt(hdc, x, y, bx, by, memDc, 0, 0, SRCCOPY);
+	SelectObject(memDc, OldBitmap);
+	DeleteObject(OldBitmap);
+}
+
+HBITMAP MemBit;
+
+void Ready(HWND hWnd)
+{
+	HBITMAP hOldbmp;
+	HDC hdc, MemDC;
+	hdc = GetDC(hWnd);
+	HBRUSH MyBrush, OldBrush;
+	int x, y;
+
+	if (MemBit)
+		DeleteObject(MemBit);
+
+	MemBit = CreateCompatibleBitmap(hdc, 800, 600);
+	MemDC = CreateCompatibleDC(hdc);
+	hOldbmp = (HBITMAP)SelectObject(MemDC, MemBit);
+
+	
+
+	PatBlt(MemDC, 0, 0, 800, 600,WHITENESS);
+
+	for (int i = 0; i < 5000; i++)
+	{
+		MyBrush = CreateSolidBrush(RGB(rand() % 256, rand() % 256, rand() % 256));
+		OldBrush = (HBRUSH)SelectObject(MemDC, MyBrush);
+		x = rand() % 720;
+		y = rand() % 520;
+		Ellipse(MemDC, x, y, x + rand() % 50 + 30, y + rand() % 50 + 30);
+		SelectObject(MemDC, OldBrush);
+		DeleteObject(MyBrush);
+	}
+	SelectObject(MemDC, hOldbmp);
+	DeleteDC(MemDC);
+	ReleaseDC(hWnd, hdc);
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc;
+	PAINTSTRUCT ps;
+	HBRUSH MyBrush, OldBrush;
+
+	switch (iMessage) {
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		DrawBitMap(hdc, 0, 0, MemBit);
+		EndPaint(hWnd, &ps);
+		break;
+	case WM_LBUTTONDOWN:
+		Ready(hWnd);
+		InvalidateRect(hWnd, NULL, FALSE);
+		break;
+	case WM_DESTROY:
+		if (MemBit)
+			DeleteObject(MemBit);
+		PostQuitMessage(0);
+		return 0;
+	}
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}

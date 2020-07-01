@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Character">
+      <UniqueIdentifier>{5bee98e2-c4cd-43f0-9dab-df91ada79d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoginSystem">
+      <UniqueIdentifier>{6194a3e8-6824-4937-8365-64a7c1818e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Character">
+      <UniqueIdentifier>{f44a28fe-759f-4fe1-9cd6-0ea7d655fe11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\LoginSystem">
+      <UniqueIdentifier>{ecc8d5cd-23b4-4f94-8b00-1fe86c26070c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Character\Orc">
+      <UniqueIdentifier>{68e04105-cfe0-4ca7-bfdc-b2c70c63b5f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Character\Hum">
+      <UniqueIdentifier>{70893e78-5e97-4f11-b006-a7aa453462af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Character\Elf">
+      <UniqueIdentifier>{e193ad09-1d86-4260-a036-33de755facd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Character\Orc">
+      <UniqueIdentifier>{be083523-f55f-4cf2-95e2-eaf40d49f984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Character\Hum">
+      <UniqueIdentifier>{e8d704c2-24bd-4b67-a55f-9e56c55560b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Character\Elf">
+      <UniqueIdentifier>{23744b38-3cf4-4c82-b374-41cc8cfcc7bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ItemFactory">
+      <UniqueIdentifier>{b622a4dc-51da-4066-952e-3f3b93d1e730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\ItemFactory">
+      <UniqueIdentifier>{e111beae-31dd-48db-a2fb-1e9a18267a58}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="operator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>소스 파일\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterFactory.cpp">
+      <Filter>소스 파일\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Elf.cpp">
+      <Filter>소스 파일\Character\Elf</Filter>
+    </ClCompile>
+    <ClCompile Include="ElfFactory.cpp">
+      <Filter>소스 파일\Character\Elf</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>소스 파일\Character\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="OrcFactory.cpp">
+      <Filter>소스 파일\Character\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>소스 파일\Character\Hum</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanFactory.cpp">
+      <Filter>소스 파일\Character\Hum</Filter>
+    </ClCompile>
+    <ClCompile Include="CManager.cpp">
+      <Filter>소스 파일\LoginSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CUser.cpp">
+      <Filter>소스 파일\LoginSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ArchorItemFactory.cpp">
+      <Filter>소스 파일\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="HealerItemFactory.cpp">
+      <Filter>소스 파일\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="SorcererItemFactory.cpp">
+      <Filter>소스 파일\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorItemFactory.cpp">
+      <Filter>소스 파일\ItemFactory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Global.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterFactory.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CManager.h">
+      <Filter>헤더 파일\LoginSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CUser.h">
+      <Filter>헤더 파일\LoginSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Elf.h">
+      <Filter>헤더 파일\Character\Elf</Filter>
+    </ClInclude>
+    <ClInclude Include="ElfFactory.h">
+      <Filter>헤더 파일\Character\Elf</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>헤더 파일\Character\Hum</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanFactory.h">
+      <Filter>헤더 파일\Character\Hum</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>헤더 파일\Character\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="OrcFactory.h">
+      <Filter>헤더 파일\Character\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="ArchorItemFactory.h">
+      <Filter>헤더 파일\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="HealerItemFactory.h">
+      <Filter>헤더 파일\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="SorcererItemFactory.h">
+      <Filter>헤더 파일\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorItemFactory.h">
+      <Filter>헤더 파일\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>헤더 파일\ItemFactory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

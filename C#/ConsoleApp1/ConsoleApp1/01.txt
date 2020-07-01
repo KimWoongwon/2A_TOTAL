@@ -1,0 +1,42 @@
+﻿using System;
+
+namespace ConsoleApp1
+{
+    delegate int MyDelegate(int p_a, int p_b);
+    class TestCls
+    {
+        public int plus(int a, int b)
+        {
+            return a + b;
+        }
+        public int Minus(int a, int b)
+        {
+            return a - b;
+        }
+    }
+    class Program
+    {
+        static int plus(int a, int b)
+        {
+            return a + b;
+        }
+        static int Minus(int a, int b)
+        {
+            return a - b;
+        }
+        static void Main(string[] args)
+        {
+            MyDelegate Callback;
+            Callback = new MyDelegate(plus);
+            Console.WriteLine(Callback(10, 20));
+
+            Callback = new MyDelegate(Minus);
+            Console.WriteLine(Callback(10, 20));
+
+            MyDelegate Callback2;
+            TestCls test = new TestCls();
+            Callback2 = test.Minus;
+            Console.WriteLine(Callback2(10, 20));
+        }
+    }
+}

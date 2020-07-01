@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp1
+{
+
+    class Program
+    {
+        static int Comparison(int x, int y)
+        {
+            if (x > y)
+                return -1;
+            else if (x < y)
+                return 1;
+            else
+                return 0;
+        }
+        static void Main(string[] args)
+        {
+            List<int> listarr = new List<int>(new int[] { 20, 30, 4, 7 });
+            listarr.Sort(Comparison); // 내림차순 정렬
+            List<int> listarr2 = new List<int>(new int[] { 20, 30, 4, 7 });
+            listarr2.Sort(); // 오름차순 정렬
+
+            foreach (int i in listarr)
+                Console.Write(" {0}", i);
+
+            Console.WriteLine();
+
+            foreach (int i in listarr2)
+                Console.Write(" {0}", i);
+
+        }
+    }
+}
