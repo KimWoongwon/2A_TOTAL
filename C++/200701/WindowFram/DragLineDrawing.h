@@ -16,6 +16,7 @@ public:
 	static CDragLineDrawing* GetInstance();
 	static void Destroy();
 	void DragDrawing(CBackBit* _bit, int _drawmode);
-	
+	void SetPenSize(int select);
+	void SetPenRGB(int select);
 };
 #endif

@@ -11,7 +11,13 @@ class CMenu
 	HWND		mHmainWnd;
 	HMENU		mHmenu;	
 	int			mMenuId;
+
 	int			mSelectFigureMenu;
+
+	int			mLineColor;
+	int			mLineWidth;
+
+	int			mAreaColor;
 	
 
 public:

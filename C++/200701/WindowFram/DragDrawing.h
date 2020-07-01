@@ -13,7 +13,7 @@ protected:
 	int PenSize;
 	COLORREF PenRGB;
 public:
-
+	CDragDrawing() { PenRGB = RGB(0, 0, 0); PenSize = 1;}
 	int GetStartp_x() {return mStartp_x;}
 	int GetStartp_y() {return mStartp_y;}
 	int GetPenSize() { return PenSize; }
@@ -21,9 +21,10 @@ public:
 
 	void SetStartp_x(int _x){ mStartp_x=_x;}
 	void SetStartp_y(int _y){ mStartp_y=_y;}
-	void SetPenSize(int _size) { PenSize = _size; }
-	void SetPenRGB(COLORREF _rgb) { PenRGB = _rgb; }
 
+	virtual void SetAreaRGB(int select) {}
+	virtual void SetPenSize(int select) = 0;
+	virtual void SetPenRGB(int select) = 0;
 	virtual void DragDrawing(CBackBit* _bit, int _drawmode)=0;
 
 };

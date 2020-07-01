@@ -8,14 +8,19 @@ class CDragRectangleDrawing :public CDragDrawing
 {
 	static CDragRectangleDrawing*	mPthis;
 
-	CDragRectangleDrawing(){};
+	CDragRectangleDrawing (){ AreaRGB = RGB(255, 255, 255); }
 	~CDragRectangleDrawing(){};
+
+	COLORREF AreaRGB;
 
 public:
 	static void Create();
 	static CDragRectangleDrawing* GetInstance();
 	static void Destroy();
 
+	void SetAreaRGB(int select);
+	void SetPenRGB(int select);
+	void SetPenSize(int select);
 	void DragDrawing(CBackBit* _bit, int _drawmode);
 	
 };
