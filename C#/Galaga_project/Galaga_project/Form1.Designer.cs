@@ -1,6 +1,6 @@
 ﻿namespace Galaga_project
 {
-	partial class Form1
+	partial class Galaga
 	{
 		/// <summary>
 		/// 필수 디자이너 변수입니다.
@@ -28,13 +28,24 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Text = "Form1";
+            this.SuspendLayout();
+            // 
+            // Galaga
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Galaga_project.Properties.Resources.Galaga_Map;
+            this.ClientSize = new System.Drawing.Size(584, 661);
+            this.Name = "Galaga";
+            this.Text = "Galaga";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Galaga_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Galaga_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Galaga_KeyUp);
+            this.ResumeLayout(false);
+
 		}
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
