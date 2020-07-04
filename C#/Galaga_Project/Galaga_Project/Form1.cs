@@ -24,12 +24,14 @@ namespace Galaga_Project
         readonly Image playerimg = Resources.Galaga_17;
 
         Point playerPos = new Point(300, 650);
-        MoveState playerMoveState = MoveState.NONE;     
+        MoveState playerMoveState = MoveState.NONE;
 
         List<Bullet> bulletList = new List<Bullet>();
+        Enemy enemy = new Enemy(new Point(100, 100));
 
         Timer UpdateTimer = null;
-        Timer moveTimer = null;
+        Timer MoveTimer = null;
+        //Timer EnemyRegenTimer = null;
         public Form1()
 		{
 			InitializeComponent();
@@ -39,10 +41,10 @@ namespace Galaga_Project
             UpdateTimer.Tick += UpdateTimer_Tick;
             UpdateTimer.Start();
 
-            moveTimer = new Timer();
-            moveTimer.Interval = 2;
-            moveTimer.Tick += MoveTimer_Tick;
-            moveTimer.Start();
+            MoveTimer = new Timer();
+            MoveTimer.Interval = 2;
+            MoveTimer.Tick += MoveTimer_Tick;
+            MoveTimer.Start();
 
         }
         /// <summary>
@@ -52,15 +54,22 @@ namespace Galaga_Project
         {
             // 이동상태에 따라 움직임이 처리되는 부분
             if (playerMoveState == MoveState.RIGHT)
-                playerPos.X += Movespeed;
+            {   
+                if (playerPos.X + playerimg.Width * 1.5f < ClientSize.Width)    // 화면 밖으로 나가지 않게 예외처리
+                    playerPos.X += Movespeed;
+            }
             if (playerMoveState == MoveState.LEFT)
-                playerPos.X -= Movespeed;
+            {
+                if (playerPos.X > 0)    // 화면 밖으로 나가지 않게 예외처리
+                    playerPos.X -= Movespeed;
+            }
 
             // 총알이 발사되면 무조건 위로만 간다.
-            foreach (var item in bulletList)
+            for (int i = bulletList.Count - 1; i >= 0; i--)
             {
-                item.position.Y -= item.Bulletspeed;
+                bulletList[i].position.Y -= bulletList[i].Bulletspeed;
             }
+         
         }
         /// <summary>
         /// 충돌처리 및 렌더링을 위한 타이머 이벤트 메소드
@@ -68,6 +77,13 @@ namespace Galaga_Project
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             // 총알 사라지는 부분 처리. 오브젝트 풀의 구현 가능성?
+
+            // 총알이 화면 위로 사라지면 삭제
+            for (int i = bulletList.Count - 1; i >= 0; i--)
+            {
+                if (bulletList[i].position.Y + bulletList[i].Img.Height < 0)
+                    bulletList.RemoveAt(i);
+            }
 
             // 충돌처리 들어갈 부분
             Invalidate();
@@ -79,10 +95,11 @@ namespace Galaga_Project
         void DirectRender(PaintEventArgs e)
         {
             // 불릿 렌더링
-            foreach (var item in bulletList) 
-                e.Graphics.DrawImage(item.BulletImg, item.position.X, item.position.Y, item.BulletImg.Size.Width * 1.5f, item.BulletImg.Size.Height * 1.5f);
+            foreach (Bullet item in bulletList) 
+                e.Graphics.DrawImage(item.Img, item.position.X, item.position.Y, item.Img.Size.Width * 1.5f, item.Img.Size.Height * 1.5f);
             // 플레이어 렌더링
             e.Graphics.DrawImage(playerimg, playerPos.X, playerPos.Y, playerimg.Size.Width * 1.5f, playerimg.Size.Height * 1.5f);
+            e.Graphics.DrawImage(enemy.Img, enemy.position.X, enemy.position.Y, enemy.Img.Size.Width * 1.5f, enemy.Img.Size.Height * 1.5f);
         }
 
         /// <summary>
