@@ -63,6 +63,26 @@ namespace Galaga_Project.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Galaga_126 {
+            get {
+                object obj = ResourceManager.GetObject("Galaga_126", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Galaga_134 {
+            get {
+                object obj = ResourceManager.GetObject("Galaga_134", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Galaga_17 {
             get {
                 object obj = ResourceManager.GetObject("Galaga_17", resourceCulture);
@@ -83,9 +103,29 @@ namespace Galaga_Project.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Galaga_178 {
+            get {
+                object obj = ResourceManager.GetObject("Galaga_178", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Galaga_310 {
             get {
                 object obj = ResourceManager.GetObject("Galaga_310", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Galaga_96 {
+            get {
+                object obj = ResourceManager.GetObject("Galaga_96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
