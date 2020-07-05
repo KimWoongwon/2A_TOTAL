@@ -89,9 +89,6 @@
     <None Include="Resources\Galaga_17.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Galaga_310.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Galaga_170.png" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +102,90 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Galaga_178.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_310.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_85.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_49.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_95.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_133.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_169.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_177.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_185.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_186.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_225.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_226.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_227.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_229.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_230.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_231.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_232.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_267.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_269.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_346.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_348.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_350.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_352.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_400.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_401.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_417.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_419.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_421.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

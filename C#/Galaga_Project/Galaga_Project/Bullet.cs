@@ -11,12 +11,25 @@ namespace Galaga_Project
 {
 	class Bullet
 	{
-		public Point position;
+		private Point Position;
+		public Point position
+		{
+			get { return Position; }
+		}
+		public int PosY
+		{
+			get { return Position.Y; }
+			set { Position.Y = value; }
+		}
 		public readonly int Bulletspeed = 10;
 		public readonly Image Img = Properties.Resources.Galaga_310;
 		public Bullet(Point pos)
 		{
-			position = new Point(pos.X, pos.Y);
+			Position = new Point(pos.X, pos.Y);
+		}
+		public Rectangle GetRect()
+		{
+			return new Rectangle(position, Img.Size);
 		}
 	}
 }
