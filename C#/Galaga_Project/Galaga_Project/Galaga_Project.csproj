@@ -54,6 +54,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlayerControler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -61,18 +62,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -128,64 +129,7 @@
     <None Include="Resources\Galaga_177.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Galaga_185.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_186.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_225.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_226.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_227.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_229.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_230.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_231.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_232.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_267.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_269.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_346.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_348.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_350.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_352.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_400.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_401.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_417.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_419.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Galaga_421.png" />
+    <None Include="Resources\Galaga_3101.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

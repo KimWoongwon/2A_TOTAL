@@ -18,87 +18,73 @@ namespace Galaga_Project
     
 	public partial class Form1 : Form
 	{
-        enum MoveState
-        {
-            NONE,
-            RIGHT,
-            LEFT
-        }
-        
-        readonly int Movespeed = 5;
-        readonly Image playerimg = Resources.Galaga_17;
+        private Timer FixedUpdateTimer = null;  // 총알 충돌처리 및 그리기, 종료체크 타이머
+        private Timer PlayerMoveTimer = null;   // 플레이어를 이동하기 위한 타이머
+        private Timer EnemyMoveTimer = null;    // 몬스터를 이동하기 위한 타이머
 
-        Point playerPos = new Point(300, 650);
-        MoveState playerMoveState = MoveState.NONE;
+        public static Size clientSize;          // 몬스터가 벽과 충돌했는지 검사하기 위한 static 변수
 
-        static List<Bullet> bulletList = new List<Bullet>();
-        
-        Timer UpdateTimer = null;
-        Timer MoveTimer = null;
+        public static int startTime;            // 총알의 발사 속도를 제한하기 위한 static 변수
+        private bool CheckEnd = true;           // FixedUpdate 중 종료체크를 위한 변수
+        private int Hpregen = 0;
 
-        public static Size clientSize;
-
-        int startTime;
-        bool CheckEnd = true;
-        //Timer EnemyRegenTimer = null;
-
-        //EnemyControler enemyControler = new EnemyControler();
+        EnemyControler EControl = EnemyControler.Inst;  // 싱글톤 클래스 이용을 위한 변수
+        PlayerControler PControl = PlayerControler.Inst;
         public Form1()
 		{
 			InitializeComponent();
+            // 플레이어 리스트 이니셜라이즈
+            PControl.PlayerImgListInit();
+            // 몬스터 관련 이니셜라이즈
+            EControl.EnemyImageInit();
+            EControl.EnemyInit();
+
+            // 클라이언트 관련 할당 (외부에서 사용)
             clientSize = ClientSize;
             startTime = Environment.TickCount;
-            EnemyControler.Inst.EnemyImageInit();
-            EnemyControler.Inst.EnemyInit();
 
             // 충돌처리 및 그리기 타이머
-            UpdateTimer = new Timer();
-            UpdateTimer.Interval = 2;
-            UpdateTimer.Tick += UpdateTimer_Tick;
-            UpdateTimer.Start();
+            FixedUpdateTimer = new Timer();
+            FixedUpdateTimer.Interval = 2;
+            FixedUpdateTimer.Tick += FixedUpdateTimer_Tick;
+            FixedUpdateTimer.Start();
 
             // 플레이어 이동 타이머
-            MoveTimer = new Timer();
-            MoveTimer.Interval = 2;
-            MoveTimer.Tick += MoveTimer_Tick;
-            MoveTimer.Start();
+            PlayerMoveTimer = new Timer();
+            PlayerMoveTimer.Interval = 2;
+            PlayerMoveTimer.Tick += PlayerMoveTimer_Tick;
+            PlayerMoveTimer.Start();
+
+            // 몬스터 이동 타이머
+            EnemyMoveTimer = new Timer();
+            EnemyMoveTimer.Interval = 100;
+            EnemyMoveTimer.Tick += EnemyMoveTimer_Tick; ;
+            EnemyMoveTimer.Start();
 
         }
-        /// <summary>
-		/// 이미지 렌더링 메소드
+
+        // 충돌 관련 메소드
+		#region
+		/// <summary>
+		/// 플레이어가 발사한 총알과 몬스터의 충돌처리를 계산하는 메소드
 		/// </summary>
-        void DirectRender(PaintEventArgs e)
+		bool CheckHit(int bIndex, int eYIndex, int eXIndex)
         {
-
-            // 불릿 렌더링
-            foreach (Bullet item in bulletList)
-                e.Graphics.DrawImage(item.Img, item.position.X, item.position.Y, item.Img.Size.Width * 1.5f, item.Img.Size.Height * 1.5f);
-            // 플레이어 렌더링
-            e.Graphics.DrawImage(playerimg, playerPos.X, playerPos.Y, playerimg.Size.Width * 1.5f, playerimg.Size.Height * 1.5f);
-
-            EnemyControler.Inst.Rendering(e);
-        }
-
-        /// <summary>
-        /// 총알과 몬스터의 충돌처리를 계산하는 메소드
-        /// </summary>
-        bool CheckHit(int bIndex, int eYIndex, int eXIndex)
-        {
-            if (EnemyControler.Inst.enemyList[eYIndex, eXIndex].Hit)
+            if (EControl.enemyList[eYIndex, eXIndex].Hit)
                 return false;
             // 총알의 영역 계산
-            Rectangle Bullet = bulletList[bIndex].GetRect();
-            int MinbulletX = bulletList[bIndex].position.X;
-            int MaxbulletX = bulletList[bIndex].position.X + bulletList[bIndex].Img.Width;
-            int MinbulletY = bulletList[bIndex].position.Y;
-            int MaxbulletY = bulletList[bIndex].position.Y + bulletList[bIndex].Img.Height;
+            int MinbulletX = PControl.bulletList[bIndex].position.X;
+            int MaxbulletX = PControl.bulletList[bIndex].position.X + PControl.bulletList[bIndex].Img.Width;
+            int MinbulletY = PControl.bulletList[bIndex].position.Y;
+            int MaxbulletY = PControl.bulletList[bIndex].position.Y + PControl.bulletList[bIndex].Img.Height;
 
-            Rectangle Enemy = bulletList[bIndex].GetRect();
-            int MinenemyX = EnemyControler.Inst.enemyList[eYIndex,eXIndex].posX;
-            int MaxenemyX = EnemyControler.Inst.enemyList[eYIndex,eXIndex].posX + (int)(EnemyControler.Inst.enemyList[eYIndex,eXIndex].Img.Width * 1.5f) + 20;
-            int MinenemyY = EnemyControler.Inst.enemyList[eYIndex,eXIndex].posY;
-            int MaxenemyY = EnemyControler.Inst.enemyList[eYIndex,eXIndex].posY + (int)(EnemyControler.Inst.enemyList[eYIndex, eXIndex].Img.Height * 1.5f);
+            // 몬스터의 영역 계산
+            int MinenemyX = EControl.enemyList[eYIndex,eXIndex].posX;
+            int MaxenemyX = EControl.enemyList[eYIndex,eXIndex].posX + (int)(EControl.enemyList[eYIndex,eXIndex].Img.Width * 1.5f) + 20;
+            int MinenemyY = EControl.enemyList[eYIndex,eXIndex].posY;
+            int MaxenemyY = EControl.enemyList[eYIndex,eXIndex].posY + (int)(EControl.enemyList[eYIndex, eXIndex].Img.Height * 1.5f);
 
+            // AABB 충돌 처리 계산
             if (MinbulletX > MinenemyX && MaxbulletX < MaxenemyX)
             {
                 if (MinbulletY > MinenemyY && MaxbulletY < MaxenemyY)
@@ -106,26 +92,60 @@ namespace Galaga_Project
             } 
             return false;
         }
+        /// <summary>
+        /// 몬스터가 발사한 총알과 플레이어의 충돌처리를 계산하는 메소드
+        /// </summary>
+        bool CheckHit(int bIndex)
+        {
+            // 총알의 영역 계산
+            int MinbulletX = EControl.EnemyBulletList[bIndex].position.X;
+            int MaxbulletX = EControl.EnemyBulletList[bIndex].position.X + EControl.EnemyBulletList[bIndex].Img.Width;
+            int MinbulletY = EControl.EnemyBulletList[bIndex].position.Y;
+            int MaxbulletY = EControl.EnemyBulletList[bIndex].position.Y + EControl.EnemyBulletList[bIndex].Img.Height;
+
+            // 몬스터의 영역 계산
+            int MinPlayerX = PControl.player.PosX;
+            int MaxPlayerX = PControl.player.PosX + (int)(PControl.player.Img.Width * 1.5f);
+            int MinPlayerY = PControl.player.PosY;
+            int MaxPlayerY = PControl.player.PosY + (int)(PControl.player.Img.Height * 1.5f);
+
+            // AABB 충돌 처리 계산
+            if (MinbulletX > MinPlayerX && MaxbulletX < MaxPlayerX)
+            {
+                if (MinbulletY > MinPlayerY && MaxbulletY < MaxPlayerY)
+                    return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 플레이어가 발사한 총알과 몬스터간의 충돌여부 검사후 처리를 담당하는 메소드
+        /// </summary>
         void BulletHitEnemy()
         {
             bool tempcheck = false;
-            if (bulletList.Count > 0)
+            if (PControl.bulletList.Count > 0)
             { 
-                for (int i = bulletList.Count - 1; i >= 0; i--)
+                // 루프문을 돌며 총알과 적의 충돌 여부 검사
+                for (int i = PControl.bulletList.Count - 1; i >= 0; i--)
                 {
-                    for (int y = 0; y < EnemyControler.Inst.EnemyListSizeY; y++)
+                    for (int y = 0; y < EControl.EnemyListSizeY; y++)
                     {
-                        for (int x = 0; x < EnemyControler.Inst.EnemyListSizeX; x++)
+                        for (int x = 0; x < EControl.EnemyListSizeX; x++)
                         {
                             if (CheckHit(i, y, x))
                             {
-                                bulletList.RemoveAt(i);
-                                EnemyControler.Inst.enemyList[y,x].Hit = true;
-                                EnemyControler.Inst.enemyList[y, x].Img = Resources.Empty;
+                                // 충돌시 해당 총알을 삭제
+                                PControl.bulletList.RemoveAt(i);
 
+                                // 몬스터의 충돌시 몬스터 삭제 대신 빈이미지로 교체후 충돌했다고 처리
+                                EControl.enemyList[y,x].Hit = true;
+                                EControl.enemyList[y, x].Img = Resources.Empty;
+
+                                // 충돌한 몬스터의 위에있는 몬스터와 충돌할 수 있도록 변수 변경
                                 if(y != 0)
-                                    EnemyControler.Inst.enemyList[y - 1, x].Hit = false;
+                                    EControl.enemyList[y - 1, x].Hit = false;
 
+                                // 전체 루프문 탈출
                                 tempcheck = true;
                                 break;
                             }
@@ -136,140 +156,199 @@ namespace Galaga_Project
                 }
             }
         }
-
-        bool IsEnd()
+        /// <summary>
+        /// 몬스터가 발사한 총알과 플레이어간의 충돌여부 검사후 처리를 담당하는 메소드
+        /// </summary>
+        void BulletHitPlayer()
         {
-            for (int y = 0; y < EnemyControler.Inst.EnemyListSizeY; y++)
+            // 루프문을 돌며 플레이어와 몬스터가 발사한 총알간의 충돌 여부 검사
+            if (EControl.EnemyBulletList.Count > 0)
             {
-                for (int x = 0; x < EnemyControler.Inst.EnemyListSizeX; x++)
+                for (int i = EControl.EnemyBulletList.Count - 1; i >= 0; i--)
                 {
-                    if (!EnemyControler.Inst.enemyList[y, x].Hit)
+                    if (CheckHit(i))
+                    {
+                        // 충돌시 해당 총알 제거
+                        EControl.EnemyBulletList.RemoveAt(i);
+                        // 충돌했을시 처리 메소드 호출
+                        PControl.HitPlayer();
+                        
+                        break;
+                    }
+                }
+            }
+        }
+		#endregion
+
+		// 종료시점 체크 메소드
+		#region
+		/// <summary>
+		/// 스테이지 클리어 체크 메소드
+		/// </summary>
+		bool IsClear()
+        {
+            // 몬스터 전체가 모두 총알에 맞았다면 트루 리턴
+            for (int y = 0; y < EControl.EnemyListSizeY; y++)
+            {
+                for (int x = 0; x < EControl.EnemyListSizeX; x++)
+                {
+                    if (!EControl.enemyList[y, x].Hit)
                         return false;
                 }
             }
             return true;
         }
-
-        void StopTimers()
+        /// <summary>
+        /// 플레이어가 죽었을때 체크 메소드
+        /// </summary>
+        bool IsEnd()
         {
-            UpdateTimer.Stop();
-            MoveTimer.Stop();
-            EnemyControler.Inst.StopTimer();
+            if (PControl.player.Hp > 0)
+                return false;
+            return true;
         }
-        void ReStartTimers()
-        {
-            UpdateTimer.Start();
-            MoveTimer.Start();
-            EnemyControler.Inst.ReStartTimer();
-        }
+		#endregion
 
-        // 타이머 이벤트 메소드
+		// 타이머 관리 메소드
 		#region
 		/// <summary>
-		/// 각종 움직임을 위한 타이머 이벤트 메소드
+		/// 스테이지 클리어 혹은 리셋시 선택 시간동안 타이머가 계속 가지않도록 처리 메소드
 		/// </summary>
-		private void MoveTimer_Tick(object sender, EventArgs e)
+		void StopTimers()
         {
-            // 이동상태에 따라 움직임이 처리되는 부분
-            if (playerMoveState == MoveState.RIGHT)
-            {   
-                if (playerPos.X + playerimg.Width * 1.5f < ClientSize.Width)    // 화면 밖으로 나가지 않게 예외처리
-                    playerPos.X += Movespeed;
-            }
-            if (playerMoveState == MoveState.LEFT)
-            {
-                if (playerPos.X > 0)    // 화면 밖으로 나가지 않게 예외처리
-                    playerPos.X -= Movespeed;
-            }
-
-            // 총알이 발사되면 무조건 위로만 간다.
-            for (int i = bulletList.Count - 1; i >= 0; i--)
-            {
-                bulletList[i].PosY -= bulletList[i].Bulletspeed;
-            }
-
-            
+            FixedUpdateTimer.Stop();
+            PlayerMoveTimer.Stop();
+            EnemyMoveTimer.Stop();
         }
 
         /// <summary>
+        /// 스테이지 클리어 혹은 리셋시 계속하기 위해 선택시 타이머 재시작 처리 메소드
+        /// </summary>
+        void ReStartTimers()
+        {
+            FixedUpdateTimer.Start();
+            PlayerMoveTimer.Start();
+            EnemyMoveTimer.Start();
+        }
+		#endregion
+
+		// 타이머 이벤트 메소드
+		#region
+		/// <summary>
+		/// 플레이어 움직임을 위한 타이머 이벤트 메소드
+		/// </summary>
+		private void PlayerMoveTimer_Tick(object sender, EventArgs e)
+        {
+            // PlayerControler 내부의 움직임 처리를 위한 메소드 호출
+            PControl.PlayerMove();
+        }
+        /// <summary>
+        /// 몬스터 움직임을 위한 타이머 이벤트 메소드
+        /// </summary>
+        private void EnemyMoveTimer_Tick(object sender, EventArgs e)
+        {
+            EControl.EnemyMove();
+        }
+        /// <summary>
         /// 충돌처리 및 렌더링, 종료시점 체크를 위한 타이머 이벤트 메소드
         /// </summary>
-        private void UpdateTimer_Tick(object sender, EventArgs e)
+        private void FixedUpdateTimer_Tick(object sender, EventArgs e)
         {
             // 총알과 몬스터 충돌체크하는 메소드
             BulletHitEnemy();
+            // 총알과 플레이어 충돌체크하는 메소드
+            BulletHitPlayer();
 
-            // 종료시점 체크 하는 부분
-            if (IsEnd() && CheckEnd)
+            // HP 리젠 처리
+            if(PControl.player.Hp == 1)
+            {
+                ++Hpregen;
+                if (Hpregen >= 250)
+                {
+                    Hpregen = 0;
+                    PControl.player.Hp = 2;
+                    PControl.player.Img = PControl.playerImgList[PControl.player.Hp - 1];
+                }
+            }
+
+            // 스테이지 클리어 시점 체크 하는 부분
+            if (IsClear() && CheckEnd)
             {
                 StopTimers();
                 CheckEnd = false;
-                if (MessageBox.Show("You Win!!! \n RePlay? or End?", "Congratulation!!", MessageBoxButtons.YesNo) == DialogResult.No)
+                DialogResult Result = MessageBox.Show("You Win!!! \n Next? or End?", "Congratulation!!", MessageBoxButtons.YesNo);
+
+                if (Result == DialogResult.No)
                 {
                     Application.Exit();
                 }
-                else
+                else if (Result == DialogResult.Yes && EControl.stageCount < 6)
                 {
-                    EnemyControler.Inst.EnemyImageInit();
-                    EnemyControler.Inst.EnemyInit();
-                    bulletList.Clear();
+                    EControl.StageClear();
+                    EControl.Reset();
+                    PControl.Reset();
                     ReStartTimers();
                     CheckEnd = true;
                 }
                 return;
             }
-            
+            // 플레이어 사망 시점 체크 하는 부분
+            if (IsEnd() && CheckEnd)
+            {
+                StopTimers();
+                CheckEnd = false;
+                DialogResult Result = MessageBox.Show("You Lose... \n Reset? or End?", "Be too bad...", MessageBoxButtons.YesNo);
+                // 사망시 메시지 박스 출력
+                if (Result == DialogResult.No)
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    // 스테이지 레벨, 몬스터, 플레이어 초기화
+                    EControl.StageLose();
+                    EControl.Reset();
+                    PControl.Reset();
+                    ReStartTimers();
+                    CheckEnd = true;
+                }
+                return;
+            }
+
+
             Invalidate();
         }
-		#endregion
-        
+        #endregion
+
+        // Form 이벤트 메소드
+        #region
         /// <summary>
         /// Invalidate() 메소드에서 호출되는 이벤트 메소드
+        /// 플레이어와 몬스터 컨트롤러의 렌더링 메소드 호출
         /// </summary>
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            DirectRender(e);
+            EControl.Rendering(e);
+            PControl.Rendering(e);
         }
 
-        // 키입력 이벤트 메소드
-        #region
+        /// <summary>
+        /// 키다운시 플레이어 컨트롤의 메소드 호출
+        /// </summary>
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-
-            int pushTime = Environment.TickCount;
-            // 플레이어의 움직임 상태를 변경해서 저장 후 처리
-            if (e.KeyCode == Keys.Right)
-            {
-                playerMoveState = MoveState.RIGHT;
-                return;
-            }
-            if (e.KeyCode == Keys.Left)
-            {
-                playerMoveState = MoveState.LEFT;
-                return;
-            }
-
-            if(e.KeyCode == Keys.Space && pushTime - startTime >= 300)
-            {
-                startTime = pushTime;
-                Bullet temp = new Bullet(playerPos);
-                bulletList.Add(temp); // bullet을 생성해서 리스트에 저장 후 처리
-                return;
-            }
+            PControl.KeyDown(e);
         }
 
+        /// <summary>
+        /// 키 업시 플레이어 컨트롤의 메소드 호출
+        /// </summary>
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            // 혹시나 다른키나 발사키(space)를 누를때 플레이어의 움직임이 멈추지 않도록 예외처리
-            switch (e.KeyCode)
-            {
-                case Keys.Right:
-                case Keys.Left:
-                    playerMoveState = MoveState.NONE;
-                    break;
-            }
+            PControl.KeyUp(e);
         }
 		#endregion 
 
 	}
 }
+

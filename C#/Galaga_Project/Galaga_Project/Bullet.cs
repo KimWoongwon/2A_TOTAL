@@ -22,10 +22,11 @@ namespace Galaga_Project
 			set { Position.Y = value; }
 		}
 		public readonly int Bulletspeed = 10;
-		public readonly Image Img = Properties.Resources.Galaga_310;
-		public Bullet(Point pos)
+		public readonly Image Img;
+		public Bullet(Point pos, Image image)
 		{
 			Position = new Point(pos.X, pos.Y);
+			Img = image;
 		}
 		public Rectangle GetRect()
 		{
