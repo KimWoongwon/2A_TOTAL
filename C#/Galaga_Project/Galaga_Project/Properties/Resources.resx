@@ -118,6 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Char_:" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_851.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_A" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_461.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_465.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_E" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_469.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_G" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_473.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_O" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_516.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_R" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_519.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_S" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_520.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Char_T" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_521.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Galaga_85.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -156,6 +183,36 @@
   </data>
   <data name="Galaga_Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Galaga_Map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_441.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_443.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_445.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_447.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_449.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_451.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_453.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_455.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_457.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Number_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Galaga_459.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Galaga_17.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

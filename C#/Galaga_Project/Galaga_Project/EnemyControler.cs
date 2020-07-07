@@ -105,7 +105,7 @@ namespace Galaga_Project
 			get { return ArrSizeX; }
 		}
 		
-		private int EnemyMoveSpeed = 5;		// 몬스터 이동 속도
+		private int EnemyMoveSpeed = 3;		// 몬스터 이동 속도
 		private bool EnemyTouchedWall = false;	// 몬스터가 벽에 닿았는지 체크하는 함수
 		private Enemy RightLastEnemy;			// 벽에 닿았는지 검사를 위한 좌우 끝 몬스터 객체
 		private Enemy LeftLastEnemy;
@@ -116,7 +116,6 @@ namespace Galaga_Project
 			get { return StageCount; }
 		}
 		private int Count = 0;					// 몬스터 애니메이션 및 몬스터 발사 총알 제한을 위한 카운트
-		private bool flag = false;				// 몬스터 애니메이션 flag 변수
 
 		/// <summary>
 		/// 이미지 가져오는 메소드
@@ -154,7 +153,7 @@ namespace Galaga_Project
 				{
 					int posX = 50 + enemyImgList[i].Width * j + 10 * j;
 					int posY = 50 + (enemyImgList[i].Height * i) + (10 * i);
-					Enemy temp = new Enemy(new Point( posX, posY), enemyImgList[i * 2], enemyImgList[i * 2 + 1]);
+					Enemy temp = new Enemy(new Point( posX, posY), enemyImgList[(i % 5) * 2], enemyImgList[(i % 5) * 2 + 1]);
 
 					if (i >= ArrSizeY - 1)
 						temp.Hit = true;
@@ -166,13 +165,26 @@ namespace Galaga_Project
 			LeftLastEnemy = new Enemy(enemyList[0,0]);
 		}
 
+		public Enemy GetFirstEnemy()
+		{
+			for (int i = ArrSizeY - 1; i >= 0; i--)
+			{
+				for (int j = 0; j < ArrSizeX; j++)
+				{
+					if (enemyList[i, j].Hit)
+						return enemyList[i, j];
+				}
+			}
+			return null;
+		}
+
 		/// <summary>
 		/// 스테이지 클리어시 호출되는 메소드
 		/// </summary>
 		public void StageClear()
 		{
 			StageCount += 1;	// 스테이지 체크
-			EnemyMoveSpeed = (int)(EnemyMoveSpeed * 1.2f);	// 스테이지에 따라 이동속도 증가
+			EnemyMoveSpeed = (int)(EnemyMoveSpeed * 1.3f);	// 스테이지에 따라 이동속도 증가
 		}
 		/// <summary>
 		/// 스테이지 패배시 호출되는 메소드
@@ -180,7 +192,7 @@ namespace Galaga_Project
 		public void StageLose()
 		{
 			StageCount = 1;    // 스테이지 체크
-			EnemyMoveSpeed = 10;  // 스테이지에 따라 이동속도 증가
+			EnemyMoveSpeed = 3;  // 스테이지에 따라 이동속도 증가
 		}
 
 		/// <summary>
@@ -251,7 +263,10 @@ namespace Galaga_Project
 						{
 							// 기본 10% 확률이며 스테이지에 따라 조금씩 증가
 							if (random.Next(0, 100) <= 10 * (1 + ((float)StageCount /10)))
+							{
 								EnemyBulletList.Add(new Bullet(enemyList[i, j].position, Properties.Resources.EnemyBullet));
+							}
+
 						}
 					}
 				}

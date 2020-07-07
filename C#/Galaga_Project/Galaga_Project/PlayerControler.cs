@@ -115,7 +115,7 @@ namespace Galaga_Project
 				return;
 			}
 
-			if (e.KeyCode == Keys.Space && pushTime - Form1.startTime >= 200)
+			if (e.KeyCode == Keys.Space && pushTime - Form1.startTime >= 100)
 			{
 				Form1.startTime = pushTime;
 				Bullet temp = new Bullet(player.position, Properties.Resources.PlayerBullet);

@@ -131,5 +131,65 @@
   <ItemGroup>
     <None Include="Resources\Galaga_3101.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_441.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_443.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_445.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_447.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_449.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_451.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_453.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_455.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_457.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_459.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_465.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_469.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_516.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_519.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_520.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_521.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_461.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_473.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Equals.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Galaga_851.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

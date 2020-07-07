@@ -9,6 +9,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Resources;
+using System.Globalization;
 using Galaga_Project.Properties;
 
 
@@ -18,6 +20,9 @@ namespace Galaga_Project
     
 	public partial class Form1 : Form
 	{
+        private char[] StageString = { 'S', 'T', 'A', 'G', 'E', ':' };
+        private char[] ScoreString = { 'S', 'C', 'O', 'R', 'E', ':' };
+        private int Score = 0;
         private Timer FixedUpdateTimer = null;  // 총알 충돌처리 및 그리기, 종료체크 타이머
         private Timer PlayerMoveTimer = null;   // 플레이어를 이동하기 위한 타이머
         private Timer EnemyMoveTimer = null;    // 몬스터를 이동하기 위한 타이머
@@ -30,6 +35,9 @@ namespace Galaga_Project
 
         EnemyControler EControl = EnemyControler.Inst;  // 싱글톤 클래스 이용을 위한 변수
         PlayerControler PControl = PlayerControler.Inst;
+
+        ResourceManager rm = Resources.ResourceManager;
+
         public Form1()
 		{
 			InitializeComponent();
@@ -42,6 +50,8 @@ namespace Galaga_Project
             // 클라이언트 관련 할당 (외부에서 사용)
             clientSize = ClientSize;
             startTime = Environment.TickCount;
+
+
 
             // 충돌처리 및 그리기 타이머
             FixedUpdateTimer = new Timer();
@@ -58,9 +68,54 @@ namespace Galaga_Project
             // 몬스터 이동 타이머
             EnemyMoveTimer = new Timer();
             EnemyMoveTimer.Interval = 50;
-            EnemyMoveTimer.Tick += EnemyMoveTimer_Tick; ;
+            EnemyMoveTimer.Tick += EnemyMoveTimer_Tick;
             EnemyMoveTimer.Start();
 
+        }
+
+        void UIRendering(PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.Red, 1), 0, 470, ClientSize.Width, 470);
+
+            StageRendering(e);
+            ScoreRendering(e);
+        }
+
+        void ScoreRendering(PaintEventArgs e)
+        {
+            Image Img;
+            int tempScore = Score;
+            int div = 100000000;
+
+            int Length = ScoreString.Length;
+            for (int i = 0; i < Length; i++)
+            {
+                Img = (Bitmap)rm.GetObject(string.Format("Char_{0}", ScoreString[i]));
+                e.Graphics.DrawImage(Img, 250 + i * Img.Width, 10, Img.Size.Width, Img.Size.Height);
+            }
+            
+            for(int i = 0; i<8; i++)
+            {
+                Img = (Bitmap)rm.GetObject(string.Format("Number_{0}", tempScore / div));
+                e.Graphics.DrawImage(Img, 250 + (Length++) * Img.Width, 10, Img.Size.Width, Img.Size.Height);
+                tempScore = tempScore % div;
+                div = div / 10;
+            }
+            Img = (Bitmap)rm.GetObject(string.Format("Number_{0}", Score % 10));
+            e.Graphics.DrawImage(Img, 250 + Length * Img.Width, 10, Img.Size.Width, Img.Size.Height);
+        }
+
+        void StageRendering(PaintEventArgs e)
+        {
+            for (int i = 0; i < StageString.Length; i++)
+            {
+                Image CharImg = (Bitmap)rm.GetObject(string.Format("Char_{0}", StageString[i]));
+                e.Graphics.DrawImage(CharImg, 10 + i * CharImg.Width, 10, CharImg.Size.Width, CharImg.Size.Height);
+            }
+            Image Img = (Bitmap)rm.GetObject(string.Format("Number_{0}", EControl.stageCount / 10));
+            e.Graphics.DrawImage(Img, 10 + StageString.Length * Img.Width, 10, Img.Size.Width, Img.Size.Height);
+            Img = (Bitmap)rm.GetObject(string.Format("Number_{0}", EControl.stageCount % 10));
+            e.Graphics.DrawImage(Img, 10 + (StageString.Length + 1) * Img.Width, 10, Img.Size.Width, Img.Size.Height);
         }
 
         // 충돌 관련 메소드
@@ -122,6 +177,7 @@ namespace Galaga_Project
         /// </summary>
         void BulletHitEnemy()
         {
+            
             bool tempcheck = false;
             if (PControl.bulletList.Count > 0)
             { 
@@ -142,8 +198,10 @@ namespace Galaga_Project
                                 EControl.enemyList[y, x].IsHit = true;
 
                                 // 충돌한 몬스터의 위에있는 몬스터와 충돌할 수 있도록 변수 변경
-                                if(y != 0)
+                                if (y != 0)
                                     EControl.enemyList[y - 1, x].Hit = true;
+
+                                Score += (int)(100 * EControl.stageCount * 1.5f);
 
                                 // 전체 루프문 탈출
                                 tempcheck = true;
@@ -203,9 +261,17 @@ namespace Galaga_Project
         /// </summary>
         bool IsEnd()
         {
-            if (PControl.player.Hp > 0)
-                return false;
-            return true;
+            if (PControl.player.Hp < 0)
+                return true;
+
+            Enemy temp = EControl.GetFirstEnemy();
+            if (temp != null)
+            {
+                if (temp.posY + temp.NowImg.Size.Height > 470)
+                    return true;
+            }
+
+            return false;
         }
 		#endregion
 
@@ -259,6 +325,7 @@ namespace Galaga_Project
             // 총알과 플레이어 충돌체크하는 메소드
             BulletHitPlayer();
 
+
             // HP 리젠 처리
             if(PControl.player.Hp == 1)
             {
@@ -276,20 +343,11 @@ namespace Galaga_Project
             {
                 StopTimers();
                 CheckEnd = false;
-                DialogResult Result = MessageBox.Show("You Win!!! \n Next? or End?", "Congratulation!!", MessageBoxButtons.YesNo);
-
-                if (Result == DialogResult.No)
-                {
-                    Application.Exit();
-                }
-                else if (Result == DialogResult.Yes && EControl.stageCount < 6)
-                {
-                    EControl.StageClear();
-                    EControl.Reset();
-                    PControl.Reset();
-                    ReStartTimers();
-                    CheckEnd = true;
-                }
+                EControl.StageClear();
+                EControl.Reset();
+                PControl.Reset();
+                ReStartTimers();
+                CheckEnd = true;
                 return;
             }
             // 플레이어 사망 시점 체크 하는 부분
@@ -297,7 +355,7 @@ namespace Galaga_Project
             {
                 StopTimers();
                 CheckEnd = false;
-                DialogResult Result = MessageBox.Show("You Lose... \n Reset? or End?", "Be too bad...", MessageBoxButtons.YesNo);
+                DialogResult Result = MessageBox.Show("GameOver! \n ReStart? or End?", "GameOver", MessageBoxButtons.YesNo);
                 // 사망시 메시지 박스 출력
                 if (Result == DialogResult.No)
                 {
@@ -328,6 +386,8 @@ namespace Galaga_Project
         /// </summary>
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            UIRendering(e);
+            
             EControl.Rendering(e);
             PControl.Rendering(e);
         }
