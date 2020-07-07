@@ -17,7 +17,7 @@ namespace Galaga_Project
 	}
 	class Player
 	{
-		private Point Position = new Point(300, 650);	// 플레이어 위치값
+		private Point Position = new Point(200, 500);	// 플레이어 위치값
 		public Point position
 		{
 			get { return Position; }
@@ -115,7 +115,7 @@ namespace Galaga_Project
 				return;
 			}
 
-			if (e.KeyCode == Keys.Space && pushTime - Form1.startTime >= 300)
+			if (e.KeyCode == Keys.Space && pushTime - Form1.startTime >= 200)
 			{
 				Form1.startTime = pushTime;
 				Bullet temp = new Bullet(player.position, Properties.Resources.PlayerBullet);

@@ -35,7 +35,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImage = global::Galaga_Project.Properties.Resources.Galaga_Map;
-			this.ClientSize = new System.Drawing.Size(584, 761);
+			this.ClientSize = new System.Drawing.Size(384, 561);
 			this.DoubleBuffered = true;
 			this.Name = "Form1";
 			this.Text = "Form1";

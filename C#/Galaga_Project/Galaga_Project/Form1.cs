@@ -57,7 +57,7 @@ namespace Galaga_Project
 
             // 몬스터 이동 타이머
             EnemyMoveTimer = new Timer();
-            EnemyMoveTimer.Interval = 100;
+            EnemyMoveTimer.Interval = 50;
             EnemyMoveTimer.Tick += EnemyMoveTimer_Tick; ;
             EnemyMoveTimer.Start();
 
@@ -70,7 +70,7 @@ namespace Galaga_Project
 		/// </summary>
 		bool CheckHit(int bIndex, int eYIndex, int eXIndex)
         {
-            if (EControl.enemyList[eYIndex, eXIndex].Hit)
+            if (!EControl.enemyList[eYIndex, eXIndex].Hit)
                 return false;
             // 총알의 영역 계산
             int MinbulletX = PControl.bulletList[bIndex].position.X;
@@ -79,10 +79,10 @@ namespace Galaga_Project
             int MaxbulletY = PControl.bulletList[bIndex].position.Y + PControl.bulletList[bIndex].Img.Height;
 
             // 몬스터의 영역 계산
-            int MinenemyX = EControl.enemyList[eYIndex,eXIndex].posX;
-            int MaxenemyX = EControl.enemyList[eYIndex,eXIndex].posX + (int)(EControl.enemyList[eYIndex,eXIndex].Img.Width * 1.5f) + 20;
+            int MinenemyX = EControl.enemyList[eYIndex,eXIndex].posX - 10;
+            int MaxenemyX = EControl.enemyList[eYIndex,eXIndex].posX + (int)(EControl.enemyList[eYIndex,eXIndex].NowImg.Width * 1.5f) + 10;
             int MinenemyY = EControl.enemyList[eYIndex,eXIndex].posY;
-            int MaxenemyY = EControl.enemyList[eYIndex,eXIndex].posY + (int)(EControl.enemyList[eYIndex, eXIndex].Img.Height * 1.5f);
+            int MaxenemyY = EControl.enemyList[eYIndex,eXIndex].posY + (int)(EControl.enemyList[eYIndex, eXIndex].NowImg.Height * 1.5f);
 
             // AABB 충돌 처리 계산
             if (MinbulletX > MinenemyX && MaxbulletX < MaxenemyX)
@@ -103,11 +103,11 @@ namespace Galaga_Project
             int MinbulletY = EControl.EnemyBulletList[bIndex].position.Y;
             int MaxbulletY = EControl.EnemyBulletList[bIndex].position.Y + EControl.EnemyBulletList[bIndex].Img.Height;
 
-            // 몬스터의 영역 계산
-            int MinPlayerX = PControl.player.PosX;
-            int MaxPlayerX = PControl.player.PosX + (int)(PControl.player.Img.Width * 1.5f);
+            // 플레이어의 영역 계산
+            int MinPlayerX = PControl.player.PosX - 10;
+            int MaxPlayerX = PControl.player.PosX + (int)(PControl.player.Img.Size.Width * 1.5f) + 10;
             int MinPlayerY = PControl.player.PosY;
-            int MaxPlayerY = PControl.player.PosY + (int)(PControl.player.Img.Height * 1.5f);
+            int MaxPlayerY = PControl.player.PosY + (int)(PControl.player.Img.Size.Height * 1.5f);
 
             // AABB 충돌 처리 계산
             if (MinbulletX > MinPlayerX && MaxbulletX < MaxPlayerX)
@@ -137,13 +137,13 @@ namespace Galaga_Project
                                 // 충돌시 해당 총알을 삭제
                                 PControl.bulletList.RemoveAt(i);
 
-                                // 몬스터의 충돌시 몬스터 삭제 대신 빈이미지로 교체후 충돌했다고 처리
-                                EControl.enemyList[y,x].Hit = true;
-                                EControl.enemyList[y, x].Img = Resources.Empty;
+                                // 몬스터의 충돌시 몬스터 삭제 대신 충돌했다고 처리
+                                EControl.enemyList[y, x].Hit = false;
+                                EControl.enemyList[y, x].IsHit = true;
 
                                 // 충돌한 몬스터의 위에있는 몬스터와 충돌할 수 있도록 변수 변경
                                 if(y != 0)
-                                    EControl.enemyList[y - 1, x].Hit = false;
+                                    EControl.enemyList[y - 1, x].Hit = true;
 
                                 // 전체 루프문 탈출
                                 tempcheck = true;
@@ -192,7 +192,7 @@ namespace Galaga_Project
             {
                 for (int x = 0; x < EControl.EnemyListSizeX; x++)
                 {
-                    if (!EControl.enemyList[y, x].Hit)
+                    if (!EControl.enemyList[y, x].IsHit)
                         return false;
                 }
             }

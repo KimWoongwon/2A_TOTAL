@@ -27,25 +27,51 @@ namespace Galaga_Project
 			get { return Position.Y; }
 			set { Position.Y = value; }
 		}
-		public Image Img;		// 몬스터 이미지
-		public Enemy(Point pos, Image img)	// 생성자 구현
+		public Image NowImg;
+		private Image Img_1;     // 몬스터 이미지
+		private Image Img_2;
+
+		private bool ImgFlag = false;
+		public bool Hit = false;	// 충돌이 가능한지 여부 
+		public bool IsHit = false;  // 맞았는지 체크하기 위한 변수
+		public Timer AnimationTimer = null;
+
+		public Enemy(Point pos, Image img01, Image img02)	// 생성자 구현
 		{
 			Position = new Point(pos.X, pos.Y);
-			Img = img;
-		}
-		public Enemy(Enemy enemy)			// 복사생성자 구현
-		{
-			this.Position = enemy.Position;
-			this.Img = enemy.Img;
+			Img_1 = img01;
+			Img_2 = img02;
+
+			AnimationTimer = new Timer();
+			AnimationTimer.Interval = 500;
+			AnimationTimer.Tick += ImageSwitchingTimer_Tick;
+			AnimationTimer.Start();
+			NowImg = Img_1;
 		}
 
-		public bool Hit = true;		// 맞았는지 체크하기 위한 변수
-									// 초기값이 true인 이유는 첫번째줄을 제외한 나머지 몬스터는 총알에 맞지 않게 하기위함
+		public Enemy(Enemy enemy)			// 복사생성자 구현
+		{
+			Position = enemy.Position;
+			Img_1 = enemy.Img_1;
+			Img_2 = enemy.Img_2;
+
+			NowImg = Img_1;
+		}
 		// 충돌처리 계산을 위해 호출되는 메소드
 		public Rectangle GetRect()
 		{
-			return new Rectangle(Position, Img.Size);
+			return new Rectangle(Position, NowImg.Size);
 		}
+		private void ImageSwitchingTimer_Tick(object sender, EventArgs e)
+		{
+			if(ImgFlag)
+				NowImg = Img_2;
+			else
+				NowImg = Img_1;
+
+			ImgFlag = !ImgFlag;
+		}
+
 	}
 	/// <summary>
 	/// 몬스터 관리 싱글톤 클래스
@@ -67,7 +93,7 @@ namespace Galaga_Project
 		public List<Bullet> EnemyBulletList = new List<Bullet>();	// 몬스터가 발사한 총알을 관리하기 위한 리스트
 		private Random random = new Random();						// 몬스터가 총알을 발사하는 확률을 위한 변수
 
-		private int ArrSizeY;                   // 몬스터 array Y사이즈 
+		private int ArrSizeY ;                   // 몬스터 array Y사이즈 
 												//스테이지에 따라 몬스터 출현 개수가 결정
 		public int EnemyListSizeY				// 몬스터 array Y사이즈 프로퍼티
 		{
@@ -79,7 +105,7 @@ namespace Galaga_Project
 			get { return ArrSizeX; }
 		}
 		
-		private int EnemyMoveSpeed = 10;		// 몬스터 이동 속도
+		private int EnemyMoveSpeed = 5;		// 몬스터 이동 속도
 		private bool EnemyTouchedWall = false;	// 몬스터가 벽에 닿았는지 체크하는 함수
 		private Enemy RightLastEnemy;			// 벽에 닿았는지 검사를 위한 좌우 끝 몬스터 객체
 		private Enemy LeftLastEnemy;
@@ -97,20 +123,20 @@ namespace Galaga_Project
 		/// </summary>
 		public void EnemyImageInit()
 		{
-			enemyImgList.Add(Properties.Resources.Enemy1_2);
 			enemyImgList.Add(Properties.Resources.Enemy1_1);
+			enemyImgList.Add(Properties.Resources.Enemy1_2);
 
-			enemyImgList.Add(Properties.Resources.Enemy2_2);
 			enemyImgList.Add(Properties.Resources.Enemy2_1);
+			enemyImgList.Add(Properties.Resources.Enemy2_2);
 
-			enemyImgList.Add(Properties.Resources.Enemy3_2);
 			enemyImgList.Add(Properties.Resources.Enemy3_1);
+			enemyImgList.Add(Properties.Resources.Enemy3_2);
 
-			enemyImgList.Add(Properties.Resources.Enemy4_2);
 			enemyImgList.Add(Properties.Resources.Enemy4_1);
+			enemyImgList.Add(Properties.Resources.Enemy4_2);
 
-			enemyImgList.Add(Properties.Resources.Enemy5_2);
 			enemyImgList.Add(Properties.Resources.Enemy5_1);
+			enemyImgList.Add(Properties.Resources.Enemy5_2);
 		}
 
 		/// <summary>
@@ -126,12 +152,12 @@ namespace Galaga_Project
 			{
 				for (int j = 0; j < ArrSizeX; j++)
 				{
-					int posX = 100 + enemyImgList[i].Width * j + 20 * j;
-					int posY = 100 + (enemyImgList[i].Height * i) + (20 * i);
-					Enemy temp = new Enemy(new Point( posX, posY), enemyImgList[i * 2]);
+					int posX = 50 + enemyImgList[i].Width * j + 10 * j;
+					int posY = 50 + (enemyImgList[i].Height * i) + (10 * i);
+					Enemy temp = new Enemy(new Point( posX, posY), enemyImgList[i * 2], enemyImgList[i * 2 + 1]);
 
 					if (i >= ArrSizeY - 1)
-						temp.Hit = false;
+						temp.Hit = true;
 					enemyList[i,j] = temp;
 				}
 			}
@@ -178,10 +204,9 @@ namespace Galaga_Project
 				{
 					for (int j = 0; j < ArrSizeX; j++)
 					{
-						enemyList[i,j].posY += enemyList[i,j].Img.Height;
+						enemyList[i,j].posY += enemyList[i,j].NowImg.Height;
 					}
 				}
-
 				EnemyMoveSpeed *= -1;
 				EnemyTouchedWall = false;
 			}
@@ -193,7 +218,7 @@ namespace Galaga_Project
 		{
 			
 			// 몬스터 벽과 충돌시 아래로 이동 부분
-			if (RightLastEnemy.posX + RightLastEnemy.Img.Width * 1.5f > Form1.clientSize.Width 
+			if (RightLastEnemy.posX + RightLastEnemy.NowImg.Width * 1.5f > Form1.clientSize.Width 
 				|| LeftLastEnemy.posX < 0)
 			{
 				EnemyTouchedWall = true;
@@ -214,8 +239,7 @@ namespace Galaga_Project
 			{
 				EnemyBulletList[i].PosY += EnemyBulletList[i].Bulletspeed;
 			}
-			
-			if(Count++ >= 10)
+			if (Count++ >= 10)
 			{
 				Count = 0;
 				// 일정 시간마다 몬스터가 총알을 발사하게끔 구현
@@ -223,7 +247,7 @@ namespace Galaga_Project
 				{
 					for (int j = 0; j < ArrSizeX; j++)
 					{
-						if (enemyList[i, j].Img != Properties.Resources.Empty && enemyList[i, j].Hit == false)
+						if (enemyList[i, j].Hit == true)
 						{
 							// 기본 10% 확률이며 스테이지에 따라 조금씩 증가
 							if (random.Next(0, 100) <= 10 * (1 + ((float)StageCount /10)))
@@ -232,21 +256,7 @@ namespace Galaga_Project
 					}
 				}
 				
-				// 이미지 스위칭으로 애니메이션 구현
-				for (int i = 0; i < ArrSizeY; i++)
-				{
-					for (int j = 0; j < ArrSizeX; j++)
-					{
-						if(enemyList[i,j].Hit == false)
-						{
-							if (flag)
-								enemyList[i, j].Img = enemyImgList[i * 2 + 1];
-							else
-								enemyList[i, j].Img = enemyImgList[i * 2];
-						}	
-					}
-				}
-				flag = !flag;
+				
 			}
 			
 
@@ -264,8 +274,9 @@ namespace Galaga_Project
 			{
 				for (int j = 0; j < ArrSizeX; j++)
 				{
-					e.Graphics.DrawImage(enemyList[i,j].Img, enemyList[i,j].posX, enemyList[i,j].posY,
-					enemyList[i,j].Img.Size.Width * 1.5f, enemyList[i,j].Img.Size.Height * 1.5f);
+					if(!enemyList[i,j].IsHit)
+					e.Graphics.DrawImage(enemyList[i,j].NowImg, enemyList[i,j].posX, enemyList[i,j].posY,
+					enemyList[i,j].NowImg.Size.Width * 1.5f, enemyList[i,j].NowImg.Size.Height * 1.5f);
 				}
 			}
 			// 총알 렌더링
