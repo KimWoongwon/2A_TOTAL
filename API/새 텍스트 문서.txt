@@ -1,0 +1,8 @@
+POINT GetRotatedPos(int x, int y, float angle)
+{
+	POINT temp;
+	temp.x = x * cos(PI / (180 / angle)) - y * sin(PI / (180 / angle));
+	temp.y = x * sin(PI / (180 / angle)) + y * cos(PI / (180 / angle));
+
+	return temp;
+}

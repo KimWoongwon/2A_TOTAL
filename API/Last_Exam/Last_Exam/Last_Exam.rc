@@ -52,6 +52,12 @@ END
 
 IDB_GALAGA_MAP          BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Galaga_Map.bmp"
 
+IDB_PLAYER              BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Galaga_17.bmp"
+
+IDB_BULLET_ENEMY        BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\EnemyBullet.bmp"
+
+IDB_BULLET_PLAYER       BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\PlayerBullet.bmp"
+
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 

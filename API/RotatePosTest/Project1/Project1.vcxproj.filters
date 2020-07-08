@@ -19,28 +19,4 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Last_Exam.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\GALAGA\images\Galaga_Map.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\GALAGA\images\Galaga_17.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\GALAGA\images\EnemyBullet.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\GALAGA\images\PlayerBullet.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-  </ItemGroup>
 </Project>
