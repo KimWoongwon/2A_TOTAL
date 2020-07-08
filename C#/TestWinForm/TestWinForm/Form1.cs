@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TestWinForm.Editor;
 using TestWinForm.Properties;
 
 namespace TestWinForm
@@ -25,6 +24,10 @@ namespace TestWinForm
 
     public partial class Form1 : Form
     {
+        // 상수
+        public static readonly Size GameImageSize = new Size(30, 30);
+
+
 
         // 로직에 관련된 부분
         // update
@@ -37,14 +40,17 @@ namespace TestWinForm
 
         // 0 = wall, x = box, p= player, .=goal
         string[] StageData = {
-                  "00000000000"
-                , "0   0  x  0"
-                , "0     x  .0"
-                , "0     p   0"
-                , "00000000000"
+                  "0000000000000000"
+                , "0   0  00      0"
+                , "0     x x     .0"
+                , "0     p        0"
+                , "0    0      .  0"
+                , "0              0"
+                , "0000000000000000"
         };
-        char[,] CurrentStageData = null; // 0, .
-        char[,] CurrentBoxStageData = null; // x, p
+
+        char[,] CurrentStageData = null; // 0, . // 스테이지 관련
+        char[,] CurrentBOXStageData = null; // x, p // 박스와 플레이어 관련
         PictureBox[,] m_CurrentPicArr = null;
         Point m_PlayerPos = new Point();
         E_DirectionType m_PlayerDirecton = E_DirectionType.Down;
@@ -64,15 +70,13 @@ namespace TestWinForm
 
             return picimage;
         }
-        Image GetPlayerNBOXType(int p_x, int p_y)
+
+        Image GetPlayerNBOXTypeImg(int p_x, int p_y)
         {
-            if (CurrentStageData[p_y, p_x] == 'x')
+            if (CurrentBOXStageData[p_y, p_x] == 'x')
                 return Resources.Crate_Beige;
 
-            if (CurrentStageData[p_y, p_x] == '.')
-                return Resources.EndPoint_Beige;
-
-            if (CurrentStageData[p_y, p_x] == 'p')
+            if (CurrentBOXStageData[p_y, p_x] == 'p')
             {
                 switch (m_PlayerDirecton)
                 {
@@ -93,20 +97,18 @@ namespace TestWinForm
                 }
             }
 
-            if (CurrentStageData[p_y, p_x] == '0')
-                return Resources.Wall_Brown;
-
-            return Resources.Ground_Grass;
+            return null;
         }
+
         Image GetStageTypeImg(int p_x, int p_y )
         {
-            if(CurrentBoxStageData[p_y,p_x] == 'x')
+            if(CurrentStageData[p_y,p_x] == 'x')
                 return Resources.Crate_Beige;
 
             if (CurrentStageData[p_y,p_x] == '.')
                 return Resources.EndPoint_Beige;
 
-            if (CurrentBoxStageData[p_y,p_x] == 'p')
+            if (CurrentStageData[p_y,p_x] == 'p')
             {
                 switch (m_PlayerDirecton)
                 {
@@ -133,8 +135,7 @@ namespace TestWinForm
             return Resources.Ground_Grass;
         }
 
-        // 상수
-        public static readonly Size GameImageSize = new Size(30, 30);
+        
         void Render()
         {
             return;
@@ -162,8 +163,8 @@ namespace TestWinForm
         {
             if(m_CurrentPicArr != null)
             {
-                int sizey = StageData.Length;
-                int sizex = StageData[0].Length;
+                int sizey = m_CurrentPicArr.GetLength(0);
+                int sizex = m_CurrentPicArr.GetLength(1);
                 for (int y = 0; y < sizey; y++)
                 {
                     for (int x = 0; x < sizex; x++)
@@ -172,12 +173,16 @@ namespace TestWinForm
                         m_CurrentPicArr[y, x] = null;
                     }
                 }
+
+                m_CurrentPicArr = null;
             }
+
+
             m_CurrentStageSize.Height = StageData.Length;
             m_CurrentStageSize.Width = StageData[0].Length;
 
             CurrentStageData = new char[m_CurrentStageSize.Height, m_CurrentStageSize.Width];
-            CurrentBoxStageData = new char[m_CurrentStageSize.Height, m_CurrentStageSize.Width];
+            CurrentBOXStageData = new char[m_CurrentStageSize.Height, m_CurrentStageSize.Width];
             m_CurrentPicArr = new PictureBox[m_CurrentStageSize.Height, m_CurrentStageSize.Width];
 
             m_PlayerPos.X = -1;
@@ -187,19 +192,19 @@ namespace TestWinForm
             {
                 for (int x = 0; x < m_CurrentStageSize.Width; x++)
                 {
-                    CurrentBoxStageData[y, x] = ' ';
                     CurrentStageData[y, x] = ' ';
-                    if ( StageData[y][x] == 'p')
+                    CurrentBOXStageData[y, x] = ' ';
+                    if (StageData[y][x] == 'p') // 플레이어
                     {
-                        CurrentBoxStageData[y, x] = StageData[y][x];
+                        CurrentBOXStageData[y, x] = StageData[y][x];
                         m_PlayerPos.X = x;
                         m_PlayerPos.Y = y;
                     }
-                    else if( StageData[y][x] == 'x')
+                    else if(StageData[y][x] == 'x') // 박스
                     {
-                        CurrentBoxStageData[y, x] = StageData[y][x];
+                        CurrentBOXStageData[y, x] = StageData[y][x];
                     }
-                    else
+                    else // 기타벽, 골인지점
                     {
                         CurrentStageData[y, x] = StageData[y][x];
                     }
@@ -245,7 +250,7 @@ namespace TestWinForm
             if (CurrentStageData[p_y, p_x] == '0')
                 return false;
 
-            if (CurrentBoxStageData[p_y, p_x] == 'x')
+            if (CurrentBOXStageData[p_y, p_x] == 'x')
                 return false;
 
             return true;
@@ -266,13 +271,13 @@ namespace TestWinForm
             if (ISOverStage(p_x, p_y))
                 return false;
 
-            return CurrentBoxStageData[p_y, p_x] == 'x';
+            return CurrentBOXStageData[p_y, p_x] == 'x';
         }
 
         void MoveBox(int p_x, int p_y, int p_mx, int p_my)
         {
-            CurrentBoxStageData[p_my, p_mx] = 'x';
-            CurrentBoxStageData[p_y, p_x] = ' ';
+            CurrentBOXStageData[p_my, p_mx] = 'x';
+            CurrentBOXStageData[p_y, p_x] = ' ';
         }
 
         private void UPBTN_Click(object sender, EventArgs e)
@@ -290,18 +295,17 @@ namespace TestWinForm
                     {
                         MoveBox(posx, posy - 1, posx, posy - 2);
 
-                        CurrentBoxStageData[posy, posx] = ' ';
-                        CurrentBoxStageData[posy - 1, posx] = 'p';
+                        CurrentBOXStageData[posy, posx] = ' ';
+                        CurrentBOXStageData[posy - 1, posx] = 'p';
                         m_PlayerPos.Y -= 1;
                     }
                 }
                 else
                 {
-                    CurrentBoxStageData[posy, posx] = ' ';
-                    CurrentBoxStageData[posy - 1, posx] = 'p';
+                    CurrentBOXStageData[posy, posx] = ' ';
+                    CurrentBOXStageData[posy - 1, posx] = 'p';
                     m_PlayerPos.Y -= 1;
                 }
-
             }
 
             //Render();
@@ -312,8 +316,15 @@ namespace TestWinForm
         {
             m_PlayerDirecton = E_DirectionType.Down;
 
-            if (ISMove(m_PlayerPos.X, m_PlayerPos.Y + 1))
+            if ( ISMove(m_PlayerPos.X, m_PlayerPos.Y + 1) )
             {
+                //int posx = m_PlayerPos.X;
+                //int posy = m_PlayerPos.Y;
+
+                //CurrentStageData[posy, posx] = ' ';
+                //CurrentStageData[posy + 1, posx] = 'p';
+                //m_PlayerPos.Y += 1;
+
                 int posx = m_PlayerPos.X;
                 int posy = m_PlayerPos.Y;
 
@@ -323,17 +334,18 @@ namespace TestWinForm
                     {
                         MoveBox(posx, posy + 1, posx, posy + 2);
 
-                        CurrentBoxStageData[posy, posx] = ' ';
-                        CurrentBoxStageData[posy + 1, posx] = 'p';
+                        CurrentBOXStageData[posy, posx] = ' ';
+                        CurrentBOXStageData[posy + 1, posx] = 'p';
                         m_PlayerPos.Y += 1;
                     }
                 }
                 else
                 {
-                    CurrentBoxStageData[posy, posx] = ' ';
-                    CurrentBoxStageData[posy + 1, posx] = 'p';
+                    CurrentBOXStageData[posy, posx] = ' ';
+                    CurrentBOXStageData[posy + 1, posx] = 'p';
                     m_PlayerPos.Y += 1;
                 }
+
 
             }
 
@@ -347,26 +359,34 @@ namespace TestWinForm
 
             if (ISMove(m_PlayerPos.X + 1, m_PlayerPos.Y))
             {
+                //int posx = m_PlayerPos.X;
+                //int posy = m_PlayerPos.Y;
+
+                //CurrentStageData[posy, posx] = ' ';
+                //CurrentStageData[posy, posx + 1] = 'p';
+                //m_PlayerPos.X += 1;
+
                 int posx = m_PlayerPos.X;
                 int posy = m_PlayerPos.Y;
 
-                if (ISBox(posx + 1, posy))
+                if (ISBox(posx + 1, posy ))
                 {
                     if (ISBoxMove(m_PlayerPos.X + 2, m_PlayerPos.Y))
                     {
                         MoveBox(posx + 1, posy, posx + 2, posy);
 
-                        CurrentBoxStageData[posy, posx] = ' ';
-                        CurrentBoxStageData[posy, posx + 1] = 'p';
+                        CurrentBOXStageData[posy, posx] = ' ';
+                        CurrentBOXStageData[posy, posx + 1] = 'p';
                         m_PlayerPos.X += 1;
                     }
                 }
                 else
                 {
-                    CurrentBoxStageData[posy, posx] = ' ';
-                    CurrentBoxStageData[posy, posx + 1] = 'p';
+                    CurrentBOXStageData[posy, posx] = ' ';
+                    CurrentBOXStageData[posy, posx + 1] = 'p';
                     m_PlayerPos.X += 1;
                 }
+
 
             }
 
@@ -380,6 +400,14 @@ namespace TestWinForm
 
             if (ISMove(m_PlayerPos.X - 1, m_PlayerPos.Y))
             {
+                //int posx = m_PlayerPos.X;
+                //int posy = m_PlayerPos.Y;
+
+                //CurrentStageData[posy, posx] = ' ';
+                //CurrentStageData[posy, posx - 1] = 'p';
+                //m_PlayerPos.X -= 1;
+
+
                 int posx = m_PlayerPos.X;
                 int posy = m_PlayerPos.Y;
 
@@ -389,15 +417,15 @@ namespace TestWinForm
                     {
                         MoveBox(posx - 1, posy, posx - 2, posy);
 
-                        CurrentBoxStageData[posy, posx] = ' ';
-                        CurrentBoxStageData[posy, posx - 1] = 'p';
+                        CurrentBOXStageData[posy, posx] = ' ';
+                        CurrentBOXStageData[posy, posx - 1] = 'p';
                         m_PlayerPos.X -= 1;
                     }
                 }
                 else
                 {
-                    CurrentBoxStageData[posy, posx] = ' ';
-                    CurrentBoxStageData[posy, posx - 1] = 'p';
+                    CurrentBOXStageData[posy, posx] = ' ';
+                    CurrentBOXStageData[posy, posx - 1] = 'p';
                     m_PlayerPos.X -= 1;
                 }
 
@@ -418,9 +446,11 @@ namespace TestWinForm
 
         void DirectRender(PaintEventArgs e)
         {
+
             int StageSizeY = m_CurrentStageSize.Height;
             int StageSizeX = m_CurrentStageSize.Width;
 
+            // 벽, 골 부분 관련 작업
             for (int y = 0; y < StageSizeY; y++)
             {
                 for (int x = 0; x < StageSizeX; x++)
@@ -437,29 +467,49 @@ namespace TestWinForm
                         , GameImageSize.Width, GameImageSize.Height);
                 }
             }
+
+
+            for (int y = 0; y < StageSizeY; y++)
+            {
+                for (int x = 0; x < StageSizeX; x++)
+                {
+                    Image tempimg = GetPlayerNBOXTypeImg(x, y);
+                    if (tempimg == null)
+                        continue;
+
+                    // 위치
+                    Point pos = new Point(x * GameImageSize.Width
+                                            , y * GameImageSize.Height);
+                    e.Graphics.DrawImage(tempimg, pos.X, pos.Y
+                        , GameImageSize.Width, GameImageSize.Height);
+                }
+            }
         }
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             DirectRender(e);
 
-
         }
 
-        private void Reset_Click(object sender, EventArgs e)
+        private void ResetBTN_Click(object sender, EventArgs e)
         {
             Init();
+            //Render();
             this.Invalidate();
+
         }
 
-        private void Editor_Click(object sender, EventArgs e)
+        private void EditorBTN_Click(object sender, EventArgs e)
         {
-            EditorForm editor = new EditorForm(StageData);
-            
-            if(editor.ShowDialog() == DialogResult.OK)
+            EditorForm editform = new EditorForm(StageData);
+            //editform.SetMapData( StageData );
+            if ( editform.ShowDialog() == DialogResult.OK)
             {
-                StageData = editor.GetEditorMapData();
+                StageData = editform.GetEditorMapData();
+
                 Init();
-                this.Invalidate();
+                Invalidate();
             }
         }
     }

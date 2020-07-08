@@ -35,8 +35,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.Reset = new System.Windows.Forms.Button();
-            this.Editor = new System.Windows.Forms.Button();
+            this.ResetBTN = new System.Windows.Forms.Button();
+            this.EditorBTN = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -109,33 +109,33 @@
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
-            // Reset
+            // ResetBTN
             // 
-            this.Reset.Location = new System.Drawing.Point(725, 388);
-            this.Reset.Name = "Reset";
-            this.Reset.Size = new System.Drawing.Size(50, 50);
-            this.Reset.TabIndex = 7;
-            this.Reset.Text = "Reset";
-            this.Reset.UseVisualStyleBackColor = true;
-            this.Reset.Click += new System.EventHandler(this.Reset_Click);
+            this.ResetBTN.Location = new System.Drawing.Point(725, 388);
+            this.ResetBTN.Name = "ResetBTN";
+            this.ResetBTN.Size = new System.Drawing.Size(50, 50);
+            this.ResetBTN.TabIndex = 7;
+            this.ResetBTN.Text = "초기화";
+            this.ResetBTN.UseVisualStyleBackColor = true;
+            this.ResetBTN.Click += new System.EventHandler(this.ResetBTN_Click);
             // 
-            // Editor
+            // EditorBTN
             // 
-            this.Editor.Location = new System.Drawing.Point(343, 388);
-            this.Editor.Name = "Editor";
-            this.Editor.Size = new System.Drawing.Size(50, 50);
-            this.Editor.TabIndex = 8;
-            this.Editor.Text = "Editor";
-            this.Editor.UseVisualStyleBackColor = true;
-            this.Editor.Click += new System.EventHandler(this.Editor_Click);
+            this.EditorBTN.Location = new System.Drawing.Point(264, 382);
+            this.EditorBTN.Name = "EditorBTN";
+            this.EditorBTN.Size = new System.Drawing.Size(107, 50);
+            this.EditorBTN.TabIndex = 8;
+            this.EditorBTN.Text = "에디터열기";
+            this.EditorBTN.UseVisualStyleBackColor = true;
+            this.EditorBTN.Click += new System.EventHandler(this.EditorBTN_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Editor);
-            this.Controls.Add(this.Reset);
+            this.Controls.Add(this.EditorBTN);
+            this.Controls.Add(this.ResetBTN);
             this.Controls.Add(this.LeftBTN);
             this.Controls.Add(this.DownBTN);
             this.Controls.Add(this.RightBTN);
@@ -162,8 +162,8 @@
         private System.Windows.Forms.Button RightBTN;
         private System.Windows.Forms.Button DownBTN;
         private System.Windows.Forms.Button LeftBTN;
-        private System.Windows.Forms.Button Reset;
-        private System.Windows.Forms.Button Editor;
+        private System.Windows.Forms.Button ResetBTN;
+        private System.Windows.Forms.Button EditorBTN;
     }
 }
 
