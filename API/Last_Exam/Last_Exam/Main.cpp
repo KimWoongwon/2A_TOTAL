@@ -1,7 +1,7 @@
-#include <windows.h>
-#include <time.h>
-#include <math.h>
-#include "resource.h"
+#include "Global.h"
+#include "Bullet.h"
+#include "Player.h"
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
@@ -38,31 +38,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 	}
 	return (int)Message.wParam;
 }
-
-// 더블버퍼링을 위한 그리기 함수입니다.
-#pragma region DoubleBuffering
-void DrawBitmap(HDC hdc, int x, int y, HBITMAP hbit)
-{
-	HDC MemoryDC;
-	int BitmapX, BitmapY;
-	BITMAP Bitmap_;
-	HBITMAP OldBitmap;
-	MemoryDC = CreateCompatibleDC(hdc);
-	OldBitmap = (HBITMAP)SelectObject(MemoryDC, hbit);
-
-	GetObject(hbit, sizeof(BITMAP), &Bitmap_);
-	BitmapX = Bitmap_.bmWidth;
-	BitmapY = Bitmap_.bmHeight;
-
-	StretchBlt(hdc, x, y, BitmapX, BitmapY, MemoryDC, 0, 0, BitmapX, BitmapY, SRCCOPY);
-	SelectObject(MemoryDC, OldBitmap);
-	DeleteDC(MemoryDC);
-}
-#pragma endregion
-
 // 생각하던 방식의 슈팅게임을 구현해보고 싶어서 이미지를 회전해주는 함수를 가져왔습니다.
-#define PI 3.141592654
-#pragma region RotateFunction
+#pragma region Rotate_Function
 HBITMAP GetRotatedBitmap(HDC hdc, HBITMAP hBitmap, int source_x, int source_y, int dest_width, int dest_height, float angle, COLORREF bkColor)
 {
 	HDC sourceDC = CreateCompatibleDC(hdc); // 회전할 비트맵 원본을 선택할 DC
@@ -141,82 +118,125 @@ void RotateBlt(HDC hdc, HDC hOffScreen, int dest_x, int dest_y, int dest_width, 
 }
 #pragma endregion 출처 : https://ldh-room.tistory.com/entry/API이미지-회전시키기 [골동품수납함]
 
-#define IDT_MAP_LOOP 1000
-#define IDT_PLAYER_MOVE 1001
-
-class Bullet
+// 더블버퍼링을 위한 그리기 함수입니다.
+#pragma region DoubleBuffering
+void DrawBitmap(HDC hdc, int x, int y, HBITMAP hbit)
 {
-public:
-	POINT Position;
-	HBITMAP Img;
-	int Width;
-	int Height;
-	float Angle;
-	bool isShoot;
+	HDC MemoryDC;
+	int BitmapX, BitmapY;
+	BITMAP Bitmap_;
+	HBITMAP OldBitmap;
+	MemoryDC = CreateCompatibleDC(hdc);
+	OldBitmap = (HBITMAP)SelectObject(MemoryDC, hbit);
 
-	Bullet(POINT pos, int image_id)
-	{
-		Position = pos;
-		Img = LoadBitmap(g_hInst, MAKEINTRESOURCE(image_id));
-		isShoot = false;
-		Angle = 0.0f;
+	GetObject(hbit, sizeof(BITMAP), &Bitmap_);
+	BitmapX = Bitmap_.bmWidth;
+	BitmapY = Bitmap_.bmHeight;
 
-		BITMAP bit;
-		GetObject(Img, sizeof(BITMAP), &bit);
-		Width = bit.bmWidth;
-		Height = bit.bmHeight;
-	}
-};
+	StretchBlt(hdc, x, y, BitmapX, BitmapY, MemoryDC, 0, 0, BitmapX, BitmapY, SRCCOPY);
+	SelectObject(MemoryDC, OldBitmap);
+	DeleteDC(MemoryDC);
+}
+#pragma endregion
+
+// 총알 발사시 좌표 회전을 위한 함수입니다.
+POINT GetRotatedPos(int x, int y, float angle)
+{
+	angle = angle * (PI / 180);
+	POINT temp;
+
+	temp.x = x * cos(angle) + y * sin(angle);
+	temp.y = x * sin(angle) - y * cos(angle);
+
+	return temp;
+}
+// 화면 바깥으로 나간경우를 처리하는 함수입니다.
+bool isOverClient(POINT pos, RECT rt)
+{
+	if (pos.x < 0 || pos.x > rt.right)
+		return true;
+	if (pos.y < 0 || pos.y > rt.bottom)
+		return true;
+	return false;
+}
+// 화면 바깥으로 나간경우를 처리하는 함수입니다.
+bool isOverClient(RECT prt, RECT rt)
+{
+	if (prt.left < 0 || prt.right > rt.right)
+		return true;
+	if (prt.top < 0 || prt.bottom > rt.bottom)
+		return true;
+	return false;
+}
+
+// Set HDC for DoubleBuffering
+void SettingDC(HDC& offsetDC, HDC& hdc, HBITMAP& backbitmap, HBITMAP& Oldbackbitmap, RECT& rect )
+{
+	hdc = CreateCompatibleDC(offsetDC);
+	backbitmap = CreateCompatibleBitmap(offsetDC, rect.right, rect.bottom);
+	Oldbackbitmap = (HBITMAP)SelectObject(hdc, backbitmap);
+	PatBlt(hdc, 0, 0, rect.right, rect.bottom, WHITENESS);
+}
+// Remove HDC for DoubleBuffering
+void RemovingDC(HDC& hdc, HBITMAP& backbitmap, HBITMAP& Oldbitmap)
+{
+	SelectObject(hdc, Oldbitmap);
+	DeleteDC(hdc);
+	DeleteObject(backbitmap);
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 
-	static HDC hdc, BACKDC, PlayerDC, BulletDC;
+	static HDC hdc, BACKDC, PlayerDC, BulletDC, EnemyDC;
 	static PAINTSTRUCT ps;
 
 	static HBITMAP BackGroundBitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_GALAGA_MAP));
+	static HBITMAP backBitmap, OldBackBitmap;
+
 	static HBITMAP PlayerBitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_PLAYER));
+	static HBITMAP PlayerbackBitmap, OldPlayerBitmap;
+
 	static HBITMAP PlayerBulletBitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BULLET_PLAYER));
-	static HBITMAP backBitmap,  OldBackBitmap, PlayerbackBitmap, OldPlayerBitmap, BulletbackBitmap, OldBulletBitmap;
+	static HBITMAP EnemyBulletBitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BULLET_ENEMY));
+	static HBITMAP BulletbackBitmap, OldBulletBitmap;
+	
+	static HBITMAP Enemy1_1bitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_ENEMY01_1));
+	static HBITMAP Enemy1_2bitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_ENEMY01_2));
+	static HBITMAP Enemy2_1bitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_ENEMY02_1));
+	static HBITMAP Enemy2_2bitmap = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_ENEMY02_2));
+	static HBITMAP EnemybackBitmap, OldEnemyBitmap;
+
+
 	static RECT rect;
 
 	BITMAP bit;
-	static int pImgSizeX, pImgSizeY;
 	int bx, by;
 
-	static POINT playerPos;
-	static float PlayerMoveSpeed = 5.0f;
-	static float PlayerRotateSpeed = 5.0f;
-	static int playerXmove = 0;		// -1 : Left /  0 : Stop / 1 : Right
-	static int playerYmove = 0;		// -1 : Up /  0 : Stop / 1 : Down
-	static int playerRotate = 0;	// -1 : LeftRotate /  0 : Stop / 1 : RightRotate
-	static int playerShootCount = 0;
+	static Player* player;
 
 	static int MapPos_01;
 	static int MapPos_02;
-	static float PlayerAngle = 0.0f;
+	static const float MapLoopSpeed = 3;
 
-	static Bullet* PlayerBulletList[50];
+	static Bullet* plBltList[50];		//Player Bullet List
+	const POINT BltMvOffset = { 0,5 };	//Bullet Move Offset
+	// speed = 5 라면 y축기준 +- 5 = (0,5), (0,-5)
 
 	switch (iMessage) {
 	case WM_CREATE:
-		
-		GetObject(PlayerBitmap, sizeof(BITMAP), &bit);
-		pImgSizeX = bit.bmWidth;
-		pImgSizeY = bit.bmHeight;
-
 		SetRect(&rect, 0, 0, 800, 600);
-		playerPos.x = (rect.right - pImgSizeX * 1.5f) / 2;
-		playerPos.y = rect.bottom - 100;
+		player = new Player(rect, PlayerBitmap);
 		MapPos_01 = 0;
 		MapPos_02 = 0 - rect.bottom;
 
 		for (int i = 0; i < 50; i++)
-			PlayerBulletList[i] = new Bullet(playerPos, IDB_BULLET_PLAYER);
+			plBltList[i] = new Bullet(player->GetPos(), PlayerBulletBitmap);
 		
 		MoveWindow(hWnd, 800, 200, rect.right, rect.bottom, TRUE);
 		SetTimer(hWnd, IDT_MAP_LOOP, 10, NULL);
 		SetTimer(hWnd, IDT_PLAYER_MOVE, 10, NULL);
+		SetTimer(hWnd, IDT_BULLET_MOVE, 10, NULL);
 		return 0;
 	case WM_GETMINMAXINFO:
 		((MINMAXINFO*)lParam)->ptMinTrackSize.x = rect.right;
@@ -228,8 +248,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case IDT_MAP_LOOP:
-			MapPos_01 += 3;
-			MapPos_02 += 3;
+			MapPos_01 += MapLoopSpeed;
+			MapPos_02 += MapLoopSpeed;
 			if (MapPos_02 >= 0)
 			{
 				MapPos_01 = 0;
@@ -237,13 +257,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		case IDT_PLAYER_MOVE:
-			playerPos.x += PlayerMoveSpeed * playerXmove;
-			playerPos.y += PlayerMoveSpeed * playerYmove;
-
-			PlayerAngle += PlayerRotateSpeed * playerRotate;
-			if (abs((int)PlayerAngle) >= 360)
-				PlayerAngle = 5.0f;
-
+			player->PlayerMove();
+			if (isOverClient(player->GetRect(), rect))
+				player->ResetPos();
+			break;
+		case IDT_BULLET_MOVE:
+			for (int i = 0; i < 50; i++)
+			{
+				plBltList[i]->BulletMove();
+				if (isOverClient(plBltList[i]->Position, rect))
+					plBltList[i]->isShoot = false;
+			}
 			break;
 		}
 		InvalidateRect(hWnd, NULL, FALSE);
@@ -252,29 +276,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_LEFT:
-			playerXmove = -1;
+			player->SetXmove(xMove::XLEFT);
 			break;
 		case VK_RIGHT:
-			playerXmove = 1;
+			player->SetXmove(xMove::XRIGHT);
 			break;
 		case VK_UP:
-			playerYmove = -1;
+			player->SetYmove(yMove::YUP);
 			break;
 		case VK_DOWN:
-			playerYmove = 1;
+			player->SetYmove(yMove::YDOWN);
 			break;
 		case 'A':
-			playerRotate = -1;
+			player->SetRotate(Rotate::RLEFT);
 			break;
 		case 'D':
-			playerRotate = 1;
+			player->SetRotate(Rotate::RRIGHT);
 			break;
 		case 'S':
-			PlayerBulletList[playerShootCount]->isShoot = true;
-			PlayerBulletList[playerShootCount]->Angle = PlayerAngle;
-			PlayerBulletList[playerShootCount++]->Position = playerPos;
-			if (playerShootCount >= 50)
-				playerShootCount = 0;
+			int Count = player->GetCount();
+			plBltList[Count]->isShoot = true;
+			plBltList[Count]->Angle = player->GetAngle();
+			plBltList[Count]->Increase = GetRotatedPos(BltMvOffset.x, BltMvOffset.y, plBltList[Count]->Angle);
+			plBltList[Count]->Position = player->GetPos();
+			player->SetCount(++Count);
+			if (player->GetCount() >= 50)
+				player->SetCount(0);
 			break;
 		}
 		break;
@@ -283,15 +310,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		{
 		case 'A':
 		case 'D':
-			playerRotate = 0;
+			player->SetRotate(Rotate::RNONE);
 			break;
 		case VK_LEFT:
 		case VK_RIGHT:
-			playerXmove = 0;
+			player->SetXmove(xMove::XNONE);
 			break;
 		case VK_UP:
 		case VK_DOWN:
-			playerYmove = 0;
+			player->SetYmove(yMove::YNONE);
 			break;
 		}
 		break;
@@ -300,21 +327,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 
-		BACKDC = CreateCompatibleDC(hdc);
-		backBitmap = CreateCompatibleBitmap(hdc, rect.right, rect.bottom);
-		OldBackBitmap = (HBITMAP)SelectObject(BACKDC, backBitmap);
-		PatBlt(BACKDC, 0, 0, rect.right, rect.bottom, WHITENESS);
-
-		PlayerDC = CreateCompatibleDC(hdc);
-		PlayerbackBitmap = CreateCompatibleBitmap(hdc, rect.right, rect.bottom);
-		OldPlayerBitmap = (HBITMAP)SelectObject(PlayerDC, PlayerbackBitmap);
-		PatBlt(PlayerDC, 0, 0, rect.right, rect.bottom, WHITENESS);
-
-		BulletDC = CreateCompatibleDC(hdc);
-		BulletbackBitmap = CreateCompatibleBitmap(hdc, rect.right, rect.bottom);
-		OldBulletBitmap = (HBITMAP)SelectObject(BulletDC, BulletbackBitmap);
-		PatBlt(BulletDC, 0, 0, rect.right, rect.bottom, WHITENESS);
-
+		// Making DC
+		SettingDC(hdc, BACKDC, backBitmap, OldBackBitmap, rect);
+		SettingDC(hdc, PlayerDC, PlayerbackBitmap, OldPlayerBitmap, rect);
+		SettingDC(hdc, EnemyDC, EnemybackBitmap, OldEnemyBitmap, rect);
+		SettingDC(hdc, BulletDC, BulletbackBitmap, OldBulletBitmap, rect);
 
 		DrawBitmap(BACKDC, 0, 0, BackGroundBitmap);
 
@@ -327,31 +344,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		StretchBlt(hdc, 0, MapPos_02, rect.right, rect.bottom, BACKDC, 0, 0, bx, by, SRCCOPY);
 
 		// Draw Player (Rotate Realize)
-		RotateBlt(hdc, PlayerDC, 0, 0, pImgSizeX, pImgSizeY, PlayerBitmap, 0, 0, SRCAND, PlayerAngle, RGB(255, 255, 255));
-		TransparentBlt(hdc, playerPos.x, playerPos.y, pImgSizeX * 1.5f, pImgSizeY * 1.5f, PlayerDC, 0, 0, pImgSizeX, pImgSizeY, RGB(255,255,255));
+		RotateBlt(hdc, PlayerDC, 0, 0, player->GetWidth(), player->GetHeight(), player->GetImage(), 0, 0, SRCAND, player->GetAngle(), RGB(255, 255, 255));
+		TransparentBlt(hdc, player->GetPos().x, player->GetPos().y, player->GetWidth() * 1.5f, player->GetHeight() * 1.5f, PlayerDC, 0, 0, player->GetWidth(), player->GetHeight(), RGB(255,255,255));
 
 		// Draw Player Bullet (Rotate Realize)
 		for (int i = 0; i < 50; i++)
 		{
-			if (PlayerBulletList[i]->isShoot == true)
+			if (plBltList[i]->isShoot == true)
 			{
-				DrawBitmap(BulletDC, 0, 0, PlayerBulletList[i]->Img);
-				TransparentBlt(hdc, PlayerBulletList[i]->Position.x, PlayerBulletList[i]->Position.y, PlayerBulletList[i]->Width * 1.5f, PlayerBulletList[i]->Height * 1.5f,
-					BulletDC, 0, 0, PlayerBulletList[i]->Width, PlayerBulletList[i]->Height, RGB(255, 255, 255));
+				DrawBitmap(BulletDC, 0, 0, plBltList[i]->Img);
+				TransparentBlt(hdc, plBltList[i]->Position.x, plBltList[i]->Position.y, plBltList[i]->Width * 1.5f, plBltList[i]->Height * 1.5f,
+					BulletDC, 0, 0, plBltList[i]->Width, plBltList[i]->Height, RGB(255, 255, 255));
 			}
-			
 		}
 		
-
-		SelectObject(BulletDC, OldBulletBitmap);
-		DeleteDC(BulletDC);
-		DeleteObject(BulletbackBitmap);
-		SelectObject(PlayerDC, OldPlayerBitmap);
-		DeleteDC(PlayerDC);
-		DeleteObject(PlayerbackBitmap);
-		SelectObject(BACKDC, OldBackBitmap);
-		DeleteDC(BACKDC);
-		DeleteObject(backBitmap);
+		// Delete DC
+		RemovingDC(BulletDC, BulletbackBitmap, OldBulletBitmap);
+		RemovingDC(PlayerDC, PlayerbackBitmap, OldPlayerBitmap);
+		RemovingDC(PlayerDC, PlayerbackBitmap, OldPlayerBitmap);
+		RemovingDC(BACKDC, backBitmap, OldBackBitmap);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:

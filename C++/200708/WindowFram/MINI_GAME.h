@@ -7,25 +7,37 @@ class MINI_GAME
 private:
 	GameLogic* state;
 
+	
+	
 	HWND hWnd;
 	HINSTANCE mhInstance;
+	HBITMAP BackGroundImg;
+	bool InvalFlag = FALSE;
+	
+
 	CBackBit* mBackBit;
 	RECT rt;
 public:
-	MINI_GAME(HWND hWnd, HINSTANCE inst, CBackBit* pBackBit);
+	LOGICS logic = LOGICS::TITLE;
+	int Score = 0;
+	MINI_GAME(HWND hWnd, HINSTANCE inst, HBITMAP hBitmap, CBackBit* pBackBit);
 	~MINI_GAME();
 
 	void SetState(GameLogic* _state);
-	
+	void SetFlag(bool);
+
 	void OnPaint(HDC);
 	void OnTimer();
 
 	HWND GetHWND();
 	HINSTANCE GetInst();
+	HBITMAP GetBGImg();
+
 	CBackBit* GetBackBit();
 	RECT GetRt();
+	bool GetInval() { return InvalFlag; }
 
-	void PushedButton();
+	void PushedButton(HWND);
 
 };
 

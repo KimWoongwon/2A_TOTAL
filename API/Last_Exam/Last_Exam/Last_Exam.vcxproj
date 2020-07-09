@@ -143,12 +143,19 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Last_Exam.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\GALAGA\images\Enemy10.bmp" />
+    <Image Include="..\..\GALAGA\images\Enemy11.bmp" />
+    <Image Include="..\..\GALAGA\images\Enemy20.bmp" />
+    <Image Include="..\..\GALAGA\images\Enemy21.bmp" />
     <Image Include="..\..\GALAGA\images\EnemyBullet.bmp" />
     <Image Include="..\..\GALAGA\images\Galaga_17.bmp" />
     <Image Include="..\..\GALAGA\images\Galaga_Map.bmp" />
