@@ -50,16 +50,5 @@ public:
 	HWND  GetHWnd() const { return mHwnd; }
 	bool GetClick()const { return mBclick; }
 
-
-	void	SetDrawing(CDragDrawing* _draw);
-	void	SetAttribute(COLOR, PENSIZE);
-	void	ReleaseAttribute(HDC _hdc);	
-
-	void	Drawing(CBackBit* _backbit, int _drawmode);
-	
-	void   SetDrawStartPoint(int _x, int _y);
-
-	bool IsSelectDraw();
-
 };
 #endif

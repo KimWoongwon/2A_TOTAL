@@ -1,5 +1,4 @@
 #include "Mouse.h"
-#include "DragDrawing.h"
 
 CMouse* CMouse::mPthis = NULL;
 
@@ -152,44 +151,3 @@ LPARAM CMouse::GetOldXY() const
 	return lparam;
 }
 
-void	CMouse::SetDrawing(CDragDrawing* _draw)
-{
-	mDrawing = _draw;
-}
-
-void	CMouse::Drawing(CBackBit* _backbit, int _drawmode)
-{
-	mDrawing->DragDrawing(_backbit, _drawmode);
-}
-
-void  CMouse::SetDrawStartPoint(int _x, int _y)
-{
-	mDrawing->SetStartp_x(_x);
-	mDrawing->SetStartp_y(_y);
-}
-
-bool CMouse::IsSelectDraw()
-{
-	if (mDrawing != nullptr)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-void CMouse::ReleaseAttribute(HDC _hdc)
-{
-	if (mDrawing != nullptr)
-	{
-		mDrawing->ReleaseAttribute(_hdc);
-	}	
-}
-
-void CMouse::SetAttribute(COLOR _color, PENSIZE _size)
-{
-	if (mDrawing != nullptr)
-	{
-		mDrawing->SetAttribute(_color, _size);
-	}
-}

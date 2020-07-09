@@ -78,41 +78,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackBit.cpp" />
-    <ClCompile Include="DragCircleDrawing.cpp" />
-    <ClCompile Include="DragDrawing.cpp" />
-    <ClCompile Include="DragFreeLineDraw.cpp" />
-    <ClCompile Include="DragLineDrawing.cpp" />
-    <ClCompile Include="DragRectangleDrawing.cpp" />
-    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="MINI_GAME.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="WindowFrame.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Attribute.h" />
     <ClInclude Include="BackBit.h" />
-    <ClInclude Include="BrushAttribute.h" />
-    <ClInclude Include="CircleMenu.h" />
-    <ClInclude Include="DragCircleDrawing.h" />
-    <ClInclude Include="DragDrawing.h" />
-    <ClInclude Include="DragFreeLineDrawing.h" />
-    <ClInclude Include="DragLineDrawing.h" />
-    <ClInclude Include="DragRectangleDrawing.h" />
-    <ClInclude Include="FreeLineMenu.h" />
+    <ClInclude Include="GameLogic.h" />
     <ClInclude Include="Global.h" />
-    <ClInclude Include="LineMenu.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MINI_GAME.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="PenAttribute.h" />
-    <ClInclude Include="RectMenu.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="WindowFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowFram.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <Image Include="..\BackGround.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

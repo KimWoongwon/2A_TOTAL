@@ -64,8 +64,8 @@ void CBackBit::SCreanDraw(HDC _hdc, int _x, int _y)
 	GetObject(mHbit,sizeof(BITMAP),&bit);
 	bx=bit.bmWidth;
 	by=bit.bmHeight;
-
-	BitBlt(_hdc,_x,_y,bx,by,MemDC,0,0,SRCCOPY);
+	StretchBlt(_hdc, _x, _y, bx * 0.75f, by * 0.75f, MemDC, 0, 0, bx , by , SRCCOPY);
+	//Bitlt(_hdc,_x,_y,bx,by,MemDC,0,0,bx/2, by/2,SRCCOPY);
 
 	SelectObject(MemDC,OldBitmap);
 	DeleteDC(MemDC);

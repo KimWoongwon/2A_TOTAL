@@ -2,7 +2,6 @@
 #define  _GLOBAL_H
 #include <windows.h>
 #include "resource.h"
-
 enum 
 {
 	NOTHING=-1, 

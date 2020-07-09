@@ -1,11 +1,7 @@
 #ifndef _CWINDOWFRAME_H
 #define _CWINDOWFRAME_H
 #include "Global.h"
-#include "Menu.h"
-#include "DragCircleDrawing.h"
-#include "DragFreeLineDrawing.h"
-#include "DragLineDrawing.h"
-#include "DragRectangleDrawing.h"
+#include "BackBit.h"
 
 
 class CWindowFrame
@@ -14,14 +10,12 @@ class CWindowFrame
 
 	HWND				mhWnd;	
 	HINSTANCE			mhInstance;	
-	CMenu*				mMenu[4];
 	CBackBit*			mBackbit;
 
 	CWindowFrame(HINSTANCE _hInstance)
 	{
 		mhWnd = nullptr;
 		mhInstance = _hInstance;
-		memset(mMenu, 0, sizeof(mMenu));
 		mBackbit = nullptr;
 	}
 	~CWindowFrame(){}
