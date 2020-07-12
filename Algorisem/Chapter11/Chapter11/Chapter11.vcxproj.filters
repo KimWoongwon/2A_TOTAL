@@ -32,12 +32,6 @@
     <ClCompile Include="ChainHashTest.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ClosedHash.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ClosedHashTest.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Member.c">
       <Filter>소스 파일</Filter>
     </ClCompile>

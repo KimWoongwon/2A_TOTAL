@@ -138,6 +138,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChainHash.c" />
+    <ClCompile Include="Global.c" />
+    <ClCompile Include="Main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChainHash.h" />
+    <ClInclude Include="Global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
