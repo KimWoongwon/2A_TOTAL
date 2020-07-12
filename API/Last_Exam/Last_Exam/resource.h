@@ -10,12 +10,16 @@
 #define IDB_ENEMY01_2                   112
 #define IDB_ENEMY02_1                   113
 #define IDB_ENEMY02_2                   114
+#define IDB_ENEMY03_1                   115
+#define IDB_ENEMY03_2                   116
+#define IDB_ENEMY04_1                   117
+#define IDB_ENEMY04_2                   118
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        115
+#define _APS_NEXT_RESOURCE_VALUE        119
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101

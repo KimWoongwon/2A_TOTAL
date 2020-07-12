@@ -66,6 +66,14 @@ IDB_ENEMY02_1           BITMAP                  "C:\\Users\\woong\\OneDrive\\Des
 
 IDB_ENEMY02_2           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy21.bmp"
 
+IDB_ENEMY03_1           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy30.bmp"
+
+IDB_ENEMY03_2           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy31.bmp"
+
+IDB_ENEMY04_1           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy40.bmp"
+
+IDB_ENEMY04_2           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy41.bmp"
+
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -32,6 +32,12 @@
     <ClInclude Include="Global.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Last_Exam.rc">
@@ -61,6 +67,18 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\GALAGA\images\Enemy21.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy30.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy31.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy40.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy41.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
