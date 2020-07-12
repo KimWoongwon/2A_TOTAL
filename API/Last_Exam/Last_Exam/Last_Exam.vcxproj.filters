@@ -23,6 +23,15 @@
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Last_Exam.rc">
@@ -40,6 +49,18 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\GALAGA\images\PlayerBullet.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy10.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy11.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy20.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\GALAGA\images\Enemy21.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

@@ -58,6 +58,14 @@ IDB_BULLET_ENEMY        BITMAP                  "C:\\Users\\woong\\OneDrive\\Des
 
 IDB_BULLET_PLAYER       BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\PlayerBullet.bmp"
 
+IDB_ENEMY01_1           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy10.bmp"
+
+IDB_ENEMY01_2           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy11.bmp"
+
+IDB_ENEMY02_1           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy20.bmp"
+
+IDB_ENEMY02_2           BITMAP                  "C:\\Users\\woong\\OneDrive\\Desktop\\2A_TOTAL\\API\\GALAGA\\images\\Enemy21.bmp"
+
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 

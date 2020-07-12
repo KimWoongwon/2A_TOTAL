@@ -1,5 +1,6 @@
 #pragma once
 #include "Global.h"
+#include <math.h>
 class MINI_GAME;
 
 class GameLogic
@@ -16,6 +17,7 @@ class Title : public GameLogic
 private:
 	static Title* Instance;
 
+	
 	int BGposX = 0;
 	int BGmoveSpeed = 50;
 	HBITMAP BackGround;
@@ -31,6 +33,9 @@ public:
 	void OnTimer();
 
 	void ChangeState();
+	void reset();
+	
+
 };
 
 class GameStart : public GameLogic
@@ -38,10 +43,19 @@ class GameStart : public GameLogic
 private:
 	static GameStart* Instance;
 
+	
+	int Gametime;
+	//POINT CirclePos = { 0,0 };
+	
+	int count = 0;
+	int CircleCount = 0;
+
 	MINI_GAME* mMainSence;
 	GameStart() {}
 	~GameStart() {}
 public:
+	POINT CirclePos = { 0,0 };
+	int radius = 0;
 	static void Create(MINI_GAME* mMainSence);
 	static void Destory();
 	static GameStart* GetInstance();
@@ -50,31 +64,35 @@ public:
 	void OnTimer();
 
 	void ChangeState();
+	void Reset();
 };
 
-class StartWaiting : public GameLogic
-{
-private:
-	static StartWaiting* Instance;
-
-	MINI_GAME* mMainSence;
-	StartWaiting() {}
-	~StartWaiting() {}
-public:
-	static void Create(MINI_GAME* mMainSence);
-	static void Destory();
-	static StartWaiting* GetInstance();
-
-	void OnPaint(HDC hdc);
-	void OnTimer();
-
-	void ChangeState();
-};
+//class Reset : public GameLogic
+//{
+//private:
+//	static Reset* Instance;
+//	
+//
+//	MINI_GAME* mMainSence;
+//	Reset() { }
+//	~Reset() {}
+//public:
+//	static void Create(MINI_GAME* mMainSence);
+//	static void Destory();
+//	static Reset* GetInstance();
+//
+//	void OnPaint(HDC hdc);
+//	void OnTimer();
+//
+//	void ChangeState();
+//};
 
 class GameEnd : public GameLogic
 {
 private:
 	static GameEnd* Instance;
+
+	
 
 	MINI_GAME* mMainSence;
 	GameEnd() {}
