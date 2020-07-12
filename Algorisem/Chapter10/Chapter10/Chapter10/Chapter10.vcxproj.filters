@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\Member.c">
+    <ClCompile Include="BinTree.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\BinTree.c">
+    <ClCompile Include="BinTreeTest.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\BinTreeTest.c">
+    <ClCompile Include="Member.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Downloads\10장\Member.h">
+    <ClInclude Include="BinTree.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Downloads\10장\BinTree.h">
+    <ClInclude Include="Member.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

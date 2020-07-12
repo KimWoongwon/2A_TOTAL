@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BinTree.c" />
+    <ClCompile Include="BinTreeTest.c" />
+    <ClCompile Include="Member.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BinTree.h" />
+    <ClInclude Include="Member.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,15 +147,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\BinTree.c" />
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\BinTreeTest.c" />
-    <ClCompile Include="..\..\..\..\..\Downloads\10장\Member.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Downloads\10장\BinTree.h" />
-    <ClInclude Include="..\..\..\..\..\Downloads\10장\Member.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
