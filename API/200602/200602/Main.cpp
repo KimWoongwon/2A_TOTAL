@@ -93,7 +93,7 @@ void MakeColumn(HWND hDlg) // 컬럼 생성 함수
 	}
 }
 
-BOOL CALLBACK Dlg1(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Dlg1(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HWND hCombo;
 	static char name[20];
