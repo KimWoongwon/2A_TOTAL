@@ -22,13 +22,15 @@ void CCreateState::ButtonProcess(WPARAM _wParam)
 }
 void CCreateState::InitializeProcess()
 {
+	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetAlignment(Alignment::Center);
+
 	GETWINDOWINST->GetButton(ID_BUTTON1)->SetVisable(TRUE);
 	GETWINDOWINST->GetButton(ID_BUTTON2)->SetVisable(TRUE);
 	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetVisable(TRUE);
 	GETWINDOWINST->GetEditControl(ID_EDIT1)->SetVisable(TRUE);
 
-	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetPosition(10, 10, 50, 25);
-	GETWINDOWINST->GetEditControl(ID_EDIT1)->SetPosition(60, 10, 150, 25);
+	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetPosition(10, 10,  60, 25);
+	GETWINDOWINST->GetEditControl(ID_EDIT1)->SetPosition(80, 10, 150, 25);
 	GETWINDOWINST->GetButton(ID_BUTTON1)->SetPosition(400, 10, 80, 80);
 	GETWINDOWINST->GetButton(ID_BUTTON2)->SetPosition(400, 100, 80, 80);
 

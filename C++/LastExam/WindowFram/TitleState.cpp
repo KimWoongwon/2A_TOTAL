@@ -29,6 +29,9 @@ void CTitleState::ButtonProcess(WPARAM _wParam)
 }
 void CTitleState::InitializeProcess()
 {
+	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetAlignment(Alignment::Right);
+	GETWINDOWINST->GetStaticText(ID_STATIC2)->SetAlignment(Alignment::Right);
+
 	GETWINDOWINST->GetEditControl(ID_EDIT1)->SetVisable(TRUE);
 	GETWINDOWINST->GetEditControl(ID_EDIT2)->SetVisable(TRUE);
 	GETWINDOWINST->GetStaticText(ID_STATIC1)->SetVisable(TRUE);

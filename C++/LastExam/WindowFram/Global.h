@@ -20,6 +20,12 @@
 
 #define ID_LIST1		31
 
+enum class Alignment
+{
+	Left = -1,
+	Center,
+	Right
+};
 
 
 #endif
