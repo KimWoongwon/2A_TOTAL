@@ -10,6 +10,49 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceCode\Controls.h" />
+    <ClInclude Include="SourceCode\Controls\EditControl.h" />
+    <ClInclude Include="SourceCode\Controls\GroupBox.h" />
+    <ClInclude Include="SourceCode\Controls\ListBox.h" />
+    <ClInclude Include="SourceCode\Controls\PushButton.h" />
+    <ClInclude Include="SourceCode\Controls\RadioButton.h" />
+    <ClInclude Include="SourceCode\Controls\StaticText.h" />
+    <ClInclude Include="SourceCode\Global.h" />
+    <ClInclude Include="SourceCode\State\CreateState.h" />
+    <ClInclude Include="SourceCode\State\GameState.h" />
+    <ClInclude Include="SourceCode\State\LoginSystem.h" />
+    <ClInclude Include="SourceCode\State\SignupState.h" />
+    <ClInclude Include="SourceCode\State\StoreState.h" />
+    <ClInclude Include="SourceCode\State\TitleState.h" />
+    <ClInclude Include="SourceCode\State\UserMenuState.h" />
+    <ClInclude Include="SourceCode\Windows\BackBit.h" />
+    <ClInclude Include="SourceCode\Windows\MainFrame.h" />
+    <ClInclude Include="SourceCode\Windows\Mouse.h" />
+    <ClInclude Include="SourceCode\Windows\Timer.h" />
+    <ClInclude Include="SourceCode\Windows\WindowFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\Controls\EditControl.cpp" />
+    <ClCompile Include="SourceCode\Controls\GroupBox.cpp" />
+    <ClCompile Include="SourceCode\Controls\ListBox.cpp" />
+    <ClCompile Include="SourceCode\Controls\PushButton.cpp" />
+    <ClCompile Include="SourceCode\Controls\RadioButton.cpp" />
+    <ClCompile Include="SourceCode\Controls\StaticText.cpp" />
+    <ClCompile Include="SourceCode\State\CreateState.cpp" />
+    <ClCompile Include="SourceCode\State\GameState.cpp" />
+    <ClCompile Include="SourceCode\State\LoginSystem.cpp" />
+    <ClCompile Include="SourceCode\State\SignupState.cpp" />
+    <ClCompile Include="SourceCode\State\StoreState.cpp" />
+    <ClCompile Include="SourceCode\State\TitleState.cpp" />
+    <ClCompile Include="SourceCode\State\UserMenuState.cpp" />
+    <ClCompile Include="SourceCode\Windows\BackBit.cpp" />
+    <ClCompile Include="SourceCode\Windows\MainFrame.cpp" />
+    <ClCompile Include="SourceCode\Windows\Mouse.cpp" />
+    <ClCompile Include="SourceCode\Windows\Timer.cpp" />
+    <ClCompile Include="SourceCode\Windows\WindowFrame.cpp" />
+    <ClCompile Include="SourceCode\Windows\WinMain.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{02B0F555-2683-4534-85FA-EF91B25CA30C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -76,51 +119,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BackBit.cpp" />
-    <ClCompile Include="CreateState.cpp" />
-    <ClCompile Include="EditControl.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="ListBox.cpp" />
-    <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="LoginSystem.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="SignupState.cpp" />
-    <ClCompile Include="StoreState.cpp" />
-    <ClCompile Include="UserMenuState.cpp" />
-    <ClCompile Include="PushButton.cpp" />
-    <ClCompile Include="ResultPlayState.cpp" />
-    <ClCompile Include="StaticText.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TitleState.cpp" />
-    <ClCompile Include="WindowFrame.cpp" />
-    <ClCompile Include="WinMain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BackBit.h" />
-    <ClInclude Include="Controls.h" />
-    <ClInclude Include="CreateState.h" />
-    <ClInclude Include="EditControl.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="ListBox.h" />
-    <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="LoginSystem.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="SignupState.h" />
-    <ClInclude Include="StoreState.h" />
-    <ClInclude Include="UserMenuState.h" />
-    <ClInclude Include="PushButton.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="ResultPlayState.h" />
-    <ClInclude Include="StaticText.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="TitleState.h" />
-    <ClInclude Include="WindowFrame.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="WindowFram.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

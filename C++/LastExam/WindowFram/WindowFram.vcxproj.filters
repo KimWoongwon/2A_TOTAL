@@ -13,155 +13,144 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\State">
-      <UniqueIdentifier>{0d6b7257-e5db-4929-8b77-72f7be02b0bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\State">
-      <UniqueIdentifier>{fdb73e05-ea99-49c4-a9e5-454d3b91be83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Controls">
-      <UniqueIdentifier>{0e7dc725-d283-42da-a8ad-05973f6aef56}</UniqueIdentifier>
+      <UniqueIdentifier>{b176592e-3707-4665-88a9-562f0924f2ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows">
+      <UniqueIdentifier>{b8d3b13f-0756-4ba7-a7d7-6e1f973bc9ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Controls">
-      <UniqueIdentifier>{24b74981-c8c1-4aa9-a567-a58713b50bd3}</UniqueIdentifier>
+      <UniqueIdentifier>{fd54398b-63a4-4c45-8641-e09334135790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\State\Title">
-      <UniqueIdentifier>{1f840c9c-2bbf-4762-beb3-30dc908ab94c}</UniqueIdentifier>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{5fb5c967-4743-414f-804c-373579bed220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\State\UserMenu">
-      <UniqueIdentifier>{d915bef4-0207-41ba-b139-021d16ac03dc}</UniqueIdentifier>
+    <Filter Include="Source Files\State">
+      <UniqueIdentifier>{5cc53788-57bb-478c-9a07-8893f3c1546d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\State\MoveToStore">
-      <UniqueIdentifier>{f2f60de9-9a11-464b-8daf-e666b65d9bce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\State\CreateCharacter">
-      <UniqueIdentifier>{5e817604-bbfc-4aae-bc99-2d68b08d333f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\State\Signup">
-      <UniqueIdentifier>{41dba755-1057-4a63-bba3-25f7db7582be}</UniqueIdentifier>
+    <Filter Include="Header Files\State">
+      <UniqueIdentifier>{4d7b8195-2950-4aac-9c71-f4624239aa2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BackBit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files\State</Filter>
-    </ClCompile>
-    <ClCompile Include="ResultPlayState.cpp">
-      <Filter>Source Files\State</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleState.cpp">
-      <Filter>Source Files\State\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="PushButton.cpp">
-      <Filter>Source Files\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="EditControl.cpp">
-      <Filter>Source Files\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticText.cpp">
-      <Filter>Source Files\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="UserMenuState.cpp">
-      <Filter>Source Files\State\UserMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginSystem.cpp">
-      <Filter>Source Files\State</Filter>
-    </ClCompile>
-    <ClCompile Include="ListBox.cpp">
-      <Filter>Source Files\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="StoreState.cpp">
-      <Filter>Source Files\State\MoveToStore</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateState.cpp">
-      <Filter>Source Files\State\CreateCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="SignupState.cpp">
-      <Filter>Source Files\State\Signup</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="WindowFrame.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\EditControl.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="BackBit.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\GroupBox.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\ListBox.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\PushButton.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\RadioButton.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Controls\StaticText.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrame.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SourceCode\Windows\BackBit.h">
+      <Filter>Header Files\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="ResultPlayState.h">
+    <ClInclude Include="SourceCode\Windows\MainFrame.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Windows\Mouse.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Windows\Timer.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Windows\WindowFrame.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\CreateState.h">
       <Filter>Header Files\State</Filter>
     </ClInclude>
-    <ClInclude Include="TitleState.h">
-      <Filter>Source Files\State\Title</Filter>
+    <ClInclude Include="SourceCode\State\GameState.h">
+      <Filter>Header Files\State</Filter>
     </ClInclude>
-    <ClInclude Include="EditControl.h">
-      <Filter>Source Files\Controls</Filter>
+    <ClInclude Include="SourceCode\State\LoginSystem.h">
+      <Filter>Header Files\State</Filter>
     </ClInclude>
-    <ClInclude Include="PushButton.h">
-      <Filter>Source Files\Controls</Filter>
+    <ClInclude Include="SourceCode\State\SignupState.h">
+      <Filter>Header Files\State</Filter>
     </ClInclude>
-    <ClInclude Include="StaticText.h">
-      <Filter>Source Files\Controls</Filter>
+    <ClInclude Include="SourceCode\State\StoreState.h">
+      <Filter>Header Files\State</Filter>
     </ClInclude>
-    <ClInclude Include="Controls.h">
+    <ClInclude Include="SourceCode\State\TitleState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\UserMenuState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Controls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UserMenuState.h">
-      <Filter>Source Files\State\UserMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginSystem.h">
-      <Filter>Source Files\State</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Source Files\State</Filter>
-    </ClInclude>
-    <ClInclude Include="ListBox.h">
-      <Filter>Source Files\Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="StoreState.h">
-      <Filter>Source Files\State\MoveToStore</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateState.h">
-      <Filter>Source Files\State\CreateCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="SignupState.h">
-      <Filter>Source Files\State\Signup</Filter>
+    <ClInclude Include="SourceCode\Global.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="WindowFram.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClCompile Include="SourceCode\Controls\EditControl.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Controls\GroupBox.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Controls\ListBox.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Controls\PushButton.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Controls\RadioButton.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Controls\StaticText.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\CreateState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\GameState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\LoginSystem.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\SignupState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\StoreState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\TitleState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\UserMenuState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\BackBit.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\MainFrame.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\Mouse.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\Timer.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\WindowFrame.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Windows\WinMain.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
