@@ -31,6 +31,48 @@
     <Filter Include="Header Files\State">
       <UniqueIdentifier>{4d7b8195-2950-4aac-9c71-f4624239aa2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{100aabc9-447e-4033-a4de-492e1947dcc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{0f568768-00de-4aaa-a0c3-866fec61d4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Elf">
+      <UniqueIdentifier>{bd657954-cf84-46f5-a173-e5f2950e1bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Orc">
+      <UniqueIdentifier>{4f7a0c6b-1def-46b3-a221-083f9bb57cbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Hum">
+      <UniqueIdentifier>{fe03f989-59df-40f7-bdf6-49aba3f42319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Elf">
+      <UniqueIdentifier>{f98129cd-1bda-41a3-ab15-ec51924bd9d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Orc">
+      <UniqueIdentifier>{8b34ad5c-dba0-49b4-84c7-6cbdd61f61f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Hum">
+      <UniqueIdentifier>{0ff63c47-f733-4708-95e7-8a2223687f49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items">
+      <UniqueIdentifier>{b23cc4bf-e2ea-450d-ae72-59c011d7a5ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items">
+      <UniqueIdentifier>{96470cb5-ac5a-4a08-9316-11b0e026836a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Factorys">
+      <UniqueIdentifier>{696de906-24e1-4f7e-9a69-6b3c816876ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Factorys">
+      <UniqueIdentifier>{cffafe60-7410-449c-9129-a2e546cb66cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Management">
+      <UniqueIdentifier>{42b94755-a6e3-428e-80b0-505ecaf7751f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Management">
+      <UniqueIdentifier>{ae5c355e-c43d-4eca-b559-7feec8df2619}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Controls\EditControl.h">
@@ -51,16 +93,7 @@
     <ClInclude Include="SourceCode\Controls\StaticText.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\Windows\BackBit.h">
-      <Filter>Header Files\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\Windows\MainFrame.h">
-      <Filter>Header Files\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\Windows\Mouse.h">
-      <Filter>Header Files\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\Windows\Timer.h">
       <Filter>Header Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Windows\WindowFrame.h">
@@ -92,6 +125,81 @@
     </ClInclude>
     <ClInclude Include="SourceCode\Global.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Elf\Elf.h">
+      <Filter>Header Files\Characters\Elf</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Elf\ElfFactory.h">
+      <Filter>Header Files\Characters\Elf</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Human\Human.h">
+      <Filter>Header Files\Characters\Hum</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Human\HumanFactory.h">
+      <Filter>Header Files\Characters\Hum</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Orc\Orc.h">
+      <Filter>Header Files\Characters\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Orc\OrcFactory.h">
+      <Filter>Header Files\Characters\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Character\CharacterFactory.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Armor.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Item.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Weapon.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Factorys\ArchorItemFactory.h">
+      <Filter>Header Files\Items\Factorys</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Factorys\ItemFactory.h">
+      <Filter>Header Files\Items\Factorys</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Factorys\SorcererItemFactory.h">
+      <Filter>Header Files\Items\Factorys</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\Factorys\WarriorItemFactory.h">
+      <Filter>Header Files\Items\Factorys</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Items\ItemDataBase.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\DeleteState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Management\UserManager.h">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Management\User.h">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Management\CharacterManager.h">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\BuyState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\SellState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Management\ItemListManager.h">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\State\ShowState.h">
+      <Filter>Header Files\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,16 +242,7 @@
     <ClCompile Include="SourceCode\State\UserMenuState.cpp">
       <Filter>Source Files\State</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\Windows\BackBit.cpp">
-      <Filter>Source Files\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\Windows\MainFrame.cpp">
-      <Filter>Source Files\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Windows\Mouse.cpp">
-      <Filter>Source Files\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Windows\Timer.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Windows\WindowFrame.cpp">
@@ -151,6 +250,75 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Windows\WinMain.cpp">
       <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Character.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\CharacterFactory.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Elf\Elf.cpp">
+      <Filter>Source Files\Characters\Elf</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Elf\ElfFactory.cpp">
+      <Filter>Source Files\Characters\Elf</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Human\Human.cpp">
+      <Filter>Source Files\Characters\Hum</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Human\HumanFactory.cpp">
+      <Filter>Source Files\Characters\Hum</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Orc\Orc.cpp">
+      <Filter>Source Files\Characters\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Character\Orc\OrcFactory.cpp">
+      <Filter>Source Files\Characters\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Armor.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Item.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Weapon.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Factorys\ArchorItemFactory.cpp">
+      <Filter>Source Files\Items\Factorys</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Factorys\SorcererItemFactory.cpp">
+      <Filter>Source Files\Items\Factorys</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\Factorys\WarriorItemFactory.cpp">
+      <Filter>Source Files\Items\Factorys</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Items\ItemDataBase.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\DeleteState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Management\UserManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Management\User.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Management\CharacterManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\BuyState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\SellState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Management\ItemListManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\State\ShowState.cpp">
+      <Filter>Source Files\State</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

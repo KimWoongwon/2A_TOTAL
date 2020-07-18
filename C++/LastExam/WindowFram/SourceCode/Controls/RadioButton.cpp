@@ -22,6 +22,11 @@ HWND CRadioButton::GetHandle()
 	return mHWnd;
 }
 
+bool CRadioButton::GetCheckInfo()
+{
+	return SendMessage(mHWnd, BM_GETCHECK, 0, 0) == BST_CHECKED;
+}
+
 void CRadioButton::SetPosition(int x, int y, int width, int height)
 {
 	SetWindowPos(mHWnd, NULL, x, y, width, height, FALSE);

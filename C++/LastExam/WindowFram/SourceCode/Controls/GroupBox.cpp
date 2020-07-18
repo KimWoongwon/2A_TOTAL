@@ -22,12 +22,6 @@ void CGroupBox::SetPosition(int x, int y, int width, int height)
 	SetWindowPos(mHWnd, NULL, x, y, width, height, FALSE);
 }
 
-
-void CGroupBox::SetCaption(TCHAR* _str)
-{
-	SetWindowText(mHWnd, _str);
-}
-
 void CGroupBox::SetVisable(bool flag)
 {
 	if (!flag)

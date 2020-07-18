@@ -10,12 +10,7 @@ CMainFrame* CMainFrame::Create(HINSTANCE _hinstance)
 	}
 
 	CWindowFrame::Create(_hinstance);
-	
 	CLoginSystem::Create();
-
-	CMouse::Create();
-
-	
 
 	return mPthis;
 }
@@ -29,15 +24,12 @@ void CMainFrame::Destroy()
 {
 	CLoginSystem::Destroy();
 	CWindowFrame::Destroy();
-	CMouse::Destroy();
-	
 
 	if (mPthis)
 	{
 		delete mPthis;
 		mPthis = NULL;
 	}
-
 	
 }
 
@@ -54,6 +46,5 @@ void CMainFrame::Run()
 void CMainFrame::Initialize()
 {
 	CWindowFrame::GetInstance()->Initialize();
-	CMouse::GetInstance()->Initialize(CWindowFrame::GetInstance()->GethWnd());
 	CLoginSystem::GetInstance()->InitializeProcess();
 }

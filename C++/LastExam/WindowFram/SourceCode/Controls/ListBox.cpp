@@ -4,10 +4,9 @@
 
 CListBox::CListBox(int x, int y, int width, int height, int ID)
 {
-	mHWnd = CreateWindow(TEXT("ListBox"), TEXT(""), WS_CHILD | WS_BORDER ,
+	mHWnd = CreateWindow(WC_LISTVIEW, TEXT(""), WS_CHILD | WS_BORDER | WS_VSCROLL | LVS_SHOWSELALWAYS | LVS_REPORT ,
 		x, y, width, height, CWindowFrame::GetInstance()->GethWnd(), (HMENU)ID, CWindowFrame::GetInstance()->GetInstanceHandle(), NULL);
 }
-
 
 CListBox::~CListBox()
 {
